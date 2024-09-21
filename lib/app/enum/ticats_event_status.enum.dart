@@ -1,0 +1,4 @@
+enum TicatsEventStatus {
+  ticketOpen,
+  ticketReservation,
+}

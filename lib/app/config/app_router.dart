@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:ticats_app/presentation/home/home_page.dart';
+import 'package:ticats_app/presentation/main/main_page.dart';
 
 part 'app_router.g.dart';
 
 class Routes {
-  // Home
-  static const String home = '/home';
+  // Main
+  static const String main = '/main';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -17,13 +17,13 @@ class Router extends _$Router {
   @override
   GoRouter build() {
     return GoRouter(
-      initialLocation: Routes.home,
+      initialLocation: Routes.main,
       navigatorKey: rootNavigatorKey,
       routes: [
-        // Home
+        // Main
         GoRoute(
-          path: Routes.home,
-          builder: (context, state) => const HomePage(),
+          path: Routes.main,
+          builder: (context, state) => const MainPage(),
         ),
       ],
     );

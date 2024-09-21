@@ -26,8 +26,7 @@ Dio dio(DioRef ref) {
   );
 
   // Add interceptor for logging(talker)
-  final talker = Talker();
-  dio.interceptors.add(TalkerDioLogger(talker: talker));
+  dio.interceptors.add(TalkerDioLogger(talker: TalkerFlutter.init()));
 
   // Add interceptor for token handling
   dio.interceptors.add(TokenInterceptor(ref));

@@ -18,8 +18,11 @@ class AppColor {
 
   // System
   static const Color positiveGreen = Color(0xFF30D158);
-  static const Color positiveBlue = Color(0xFF4B87FF);
-  static const Color error = Color(0xFFFF453A);
+  static const Color positiveBlue = Color(0xFF007AFF);
+  static const Color positiveBlueBg = Color(0xFFEDF3FF);
+  static const Color error = Color(0xFFEB271C);
+  static const Color errorBg = Color(0xFFFFEDF0);
+  static const Color systemError = Color(0xFFF74865);
 }
 
 class AppGrayscale {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticats_app/gen/fonts.gen.dart';
 
 class AppTheme {
   static final ThemeData appTheme = ThemeData(
@@ -9,7 +10,7 @@ class AppTheme {
       scrolledUnderElevation: 0,
       titleSpacing: 0,
     ),
-    fontFamily: 'SUIT',
+    fontFamily: FontFamily.suit,
     scaffoldBackgroundColor: Colors.white,
   );
 }

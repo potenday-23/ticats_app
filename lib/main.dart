@@ -11,11 +11,11 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize talker
-  TalkerFlutter.init();
+  final talker = TalkerFlutter.init();
 
   runApp(
     ProviderScope(
-      observers: [TalkerRiverpodObserver()],
+      observers: [TalkerRiverpodObserver(talker: talker)],
       child: const MainApp(),
     ),
   );
