@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:talker_flutter/talker_flutter.dart';
+import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
 
 void main() {
-  runApp(const MainApp());
+  // Wait for the dependencies to be configured
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize talker
+  TalkerFlutter.init();
+
+  runApp(
+    ProviderScope(
+      observers: [TalkerRiverpodObserver()],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -9,12 +24,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(390, 880),
+      minTextAdapt: true,
+      useInheritedMediaQuery: true,
+      builder: (context, child) {
+        return const MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Text('Hello World!'),
+            ),
+          ),
+        );
+      },
     );
   }
 }
