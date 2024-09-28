@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:ticats_app/app/enum/login_provider.enum.dart';
@@ -21,7 +22,7 @@ class AuthService extends _$AuthService {
     } else if (provider == LoginProvider.google) {
       entity = await _loginWithGoogle();
     } else if (provider == LoginProvider.kakao) {
-      // TODO: Kakao login
+      entity = await _loginWithKakao();
     }
   }
 
@@ -55,6 +56,26 @@ class AuthService extends _$AuthService {
       }
     } catch (e) {
       if (kDebugMode) print('구글 로그인 실패: $e');
+    }
+
+    return null;
+  }
+
+  Future<SsoLoginEntity?> _loginWithKakao() async {
+    User user;
+
+    try {
+      if (await isKakaoTalkInstalled()) {
+        await UserApi.instance.loginWithKakaoTalk();
+      } else {
+        await UserApi.instance.loginWithKakaoAccount();
+      }
+
+      user = await UserApi.instance.me();
+
+      return SsoLoginEntity(socialId: user.id.toString(), socialType: 'KAKAO', email: user.kakaoAccount!.email!);
+    } catch (e) {
+      if (kDebugMode) print('카카오 로그인 실패: $e');
     }
 
     return null;

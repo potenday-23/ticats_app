@@ -45,6 +45,11 @@
 	</array>
 	<key>GIDClientID</key>
 	<string>900559920776-buukmrjmls53plnhns88uakuglim68t7.apps.googleusercontent.com</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>kakaolink</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -53,6 +58,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.900559920776-buukmrjmls53plnhns88uakuglim68t7</string>
+				<string>kakaoe431334bbd653b087fa3bdc1d431c42e</string>
 			</array>
 		</dict>
 	</array>
