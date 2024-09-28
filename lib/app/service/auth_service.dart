@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:ticats_app/app/enum/login_provider.enum.dart';
@@ -13,10 +14,12 @@ class AuthService extends _$AuthService {
   FutureOr<void> build() {}
 
   Future<void> login(LoginProvider provider) async {
+    final SsoLoginEntity? entity;
+
     if (provider == LoginProvider.apple) {
-      final SsoLoginEntity? entity = await _loginWithApple();
+      entity = await _loginWithApple();
     } else if (provider == LoginProvider.google) {
-      // TODO: Google login
+      entity = await _loginWithGoogle();
     } else if (provider == LoginProvider.kakao) {
       // TODO: Kakao login
     }
@@ -38,6 +41,20 @@ class AuthService extends _$AuthService {
       return SsoLoginEntity(socialId: credential.userIdentifier!, socialType: 'APPLE', email: email);
     } catch (e) {
       if (kDebugMode) print('애플 로그인 실패: $e');
+    }
+
+    return null;
+  }
+
+  Future<SsoLoginEntity?> _loginWithGoogle() async {
+    try {
+      GoogleSignInAccount? credential = await GoogleSignIn(scopes: ['email']).signIn();
+
+      if (credential != null) {
+        return SsoLoginEntity(socialId: credential.id, socialType: 'GOOGLE', email: credential.email);
+      }
+    } catch (e) {
+      if (kDebugMode) print('구글 로그인 실패: $e');
     }
 
     return null;
