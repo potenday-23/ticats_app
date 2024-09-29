@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:ticats_app/app/config/app_router.dart';
 import 'package:ticats_app/app/enum/login_provider.enum.dart';
 import 'package:ticats_app/domain/entity/auth/member_entity.dart';
 import 'package:ticats_app/domain/entity/auth/sso_login_entity.dart';
@@ -50,6 +51,7 @@ class AuthService extends _$AuthService {
       // TODO: Go to Home
     } else {
       state = AsyncValue.data(state.value!.copyWith(sso: ssoEntity));
+      ref.read(routerProvider).pushNamed(Routes.registerProfile);
     }
   }
 
