@@ -1,4 +1,4 @@
-abstract class SettingsRepository {
+abstract class SettingRepository {
   Future<void> clearSetting();
   Future<void> clearSecureSetting();
   dynamic loadSetting(String key);

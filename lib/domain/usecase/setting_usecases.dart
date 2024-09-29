@@ -1,13 +1,13 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:ticats_app/data/repository_impl/settings_repository_impl.dart';
-import 'package:ticats_app/domain/repository/settings_repository.dart';
+import 'package:ticats_app/data/repository_impl/setting_repository_impl.dart';
+import 'package:ticats_app/domain/repository/setting_repository.dart';
 
 part 'setting_usecases.g.dart';
 
 class SettingUsecases {
-  SettingUsecases({required SettingsRepository repository}) : _repository = repository;
+  SettingUsecases({required SettingRepository repository}) : _repository = repository;
 
-  final SettingsRepository _repository;
+  final SettingRepository _repository;
 
   LoadSettingUseCase get loadSetting => LoadSettingUseCase(_repository);
   UpdateSettingUseCase get updateSetting => UpdateSettingUseCase(_repository);
@@ -16,7 +16,7 @@ class SettingUsecases {
 }
 
 class ClearSettingUseCase {
-  final SettingsRepository _repository;
+  final SettingRepository _repository;
 
   ClearSettingUseCase(this._repository);
 
@@ -26,7 +26,7 @@ class ClearSettingUseCase {
 }
 
 class LoadSettingUseCase {
-  final SettingsRepository _repository;
+  final SettingRepository _repository;
 
   LoadSettingUseCase(this._repository);
 
@@ -36,7 +36,7 @@ class LoadSettingUseCase {
 }
 
 class UpdateSettingUseCase {
-  final SettingsRepository _repository;
+  final SettingRepository _repository;
 
   UpdateSettingUseCase(this._repository);
 
@@ -46,7 +46,7 @@ class UpdateSettingUseCase {
 }
 
 class ClearSecureSettingUseCase {
-  final SettingsRepository _repository;
+  final SettingRepository _repository;
 
   ClearSecureSettingUseCase(this._repository);
 
@@ -56,7 +56,7 @@ class ClearSecureSettingUseCase {
 }
 
 class LoadSecureSettingUseCase {
-  final SettingsRepository _repository;
+  final SettingRepository _repository;
 
   LoadSecureSettingUseCase(this._repository);
 
@@ -66,7 +66,7 @@ class LoadSecureSettingUseCase {
 }
 
 class UpdateSecureSettingUseCase {
-  final SettingsRepository _repository;
+  final SettingRepository _repository;
 
   UpdateSecureSettingUseCase(this._repository);
 
@@ -77,5 +77,5 @@ class UpdateSecureSettingUseCase {
 
 @riverpod
 SettingUsecases settingUsecases(SettingUsecasesRef ref) {
-  return SettingUsecases(repository: ref.watch(settingsRepositoryProvider));
+  return SettingUsecases(repository: ref.watch(settingRepositoryProvider));
 }

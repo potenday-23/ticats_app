@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'settings_local_data_source.dart';
+import 'setting_local_data_source.dart';
 
-class SharedPrefDataSourceImpl implements SettingsLocalDataSource {
+class SharedPrefDataSourceImpl implements SettingLocalDataSource {
   SharedPrefDataSourceImpl();
 
   late SharedPreferences prefs;
@@ -39,6 +39,6 @@ class SharedPrefDataSourceImpl implements SettingsLocalDataSource {
   }
 }
 
-final sharedPreferencesDataSourceProvider = Provider<SettingsLocalDataSource>((ref) {
+final sharedPreferencesDataSourceProvider = Provider<SettingLocalDataSource>((ref) {
   return SharedPrefDataSourceImpl();
 });

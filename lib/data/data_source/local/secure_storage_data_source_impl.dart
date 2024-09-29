@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'settings_local_data_source.dart';
+import 'setting_local_data_source.dart';
 
-class SecureStorageDataSourceImpl implements SettingsLocalDataSource {
+class SecureStorageDataSourceImpl implements SettingLocalDataSource {
   SecureStorageDataSourceImpl();
 
   late FlutterSecureStorage secureStorage;
@@ -32,6 +32,6 @@ class SecureStorageDataSourceImpl implements SettingsLocalDataSource {
   }
 }
 
-final secureStorageDataSourceProvider = Provider<SettingsLocalDataSource>((ref) {
+final secureStorageDataSourceProvider = Provider<SettingLocalDataSource>((ref) {
   return SecureStorageDataSourceImpl();
 });
