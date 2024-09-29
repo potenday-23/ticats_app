@@ -6,8 +6,9 @@ import 'package:talker_flutter/talker_flutter.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
 import 'package:ticats_app/app/config/app_router.dart';
 import 'package:ticats_app/app/config/app_theme.dart';
+import 'package:ticats_app/data/repository_impl/settings_repository_impl.dart';
 
-void main() {
+Future<void> main() async {
   // Wait for the dependencies to be configured
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -17,9 +18,17 @@ void main() {
   // Initialize kakao sdk
   KakaoSdk.init(nativeAppKey: "e431334bbd653b087fa3bdc1d431c42e");
 
+  // Create provider container
+  final container = ProviderContainer(
+    observers: [TalkerRiverpodObserver(talker: talker)],
+  );
+
+  // Initialize settings
+  await container.read(initializeSettingsProvider.future);
+
   runApp(
-    ProviderScope(
-      observers: [TalkerRiverpodObserver(talker: talker)],
+    UncontrolledProviderScope(
+      container: container,
       child: const MainApp(),
     ),
   );
