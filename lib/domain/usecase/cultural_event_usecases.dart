@@ -6,11 +6,6 @@ import 'package:ticats_app/domain/repository/cultural_event_repository.dart';
 
 part 'cultural_event_usecases.g.dart';
 
-@riverpod
-CulturalEventUsecases culturalEventUsecases(CulturalEventUsecasesRef ref) {
-  return CulturalEventUsecases(repository: ref.read(culturalEventRepositoryProvider));
-}
-
 class CulturalEventUsecases {
   CulturalEventUsecases({required CulturalEventRepository repository}) : _repository = repository;
 
@@ -60,4 +55,9 @@ class GetRecommendEvents {
   Future<List<CulturalEventEntity>> execute(CulturalEventsSearchEntity request) async {
     return await _repository.getRecommendEvents(request);
   }
+}
+
+@riverpod
+CulturalEventUsecases culturalEventUsecases(CulturalEventUsecasesRef ref) {
+  return CulturalEventUsecases(repository: ref.read(culturalEventRepositoryProvider));
 }

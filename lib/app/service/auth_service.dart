@@ -4,25 +4,52 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:ticats_app/app/enum/login_provider.enum.dart';
+import 'package:ticats_app/domain/entity/auth/member_entity.dart';
 import 'package:ticats_app/domain/entity/auth/sso_login_entity.dart';
+import 'package:ticats_app/domain/entity/state/auth_state.dart';
+import 'package:ticats_app/domain/usecase/auth_usecases.dart';
 import 'package:uuid/uuid.dart';
 
 part 'auth_service.g.dart';
 
 @Riverpod(keepAlive: true)
 class AuthService extends _$AuthService {
+  AuthUseCases get _authUseCases => ref.read(authUseCasesProvider);
+
   @override
-  FutureOr<void> build() {}
+  FutureOr<AuthState> build() async {
+    final MemberEntity? memberInfo = await _authUseCases.loadMember.execute();
+
+    if (memberInfo == null) {
+      return const AuthState();
+    }
+
+    return AuthState(memberInfo: memberInfo);
+  }
 
   Future<void> login(LoginProvider provider) async {
-    final SsoLoginEntity? entity;
+    final SsoLoginEntity? ssoEntity;
 
     if (provider == LoginProvider.apple) {
-      entity = await _loginWithApple();
+      ssoEntity = await _loginWithApple();
     } else if (provider == LoginProvider.google) {
-      entity = await _loginWithGoogle();
+      ssoEntity = await _loginWithGoogle();
     } else if (provider == LoginProvider.kakao) {
-      entity = await _loginWithKakao();
+      ssoEntity = await _loginWithKakao();
+    } else {
+      ssoEntity = null;
+    }
+
+    if (ssoEntity == null) return;
+
+    MemberEntity memberEntityResponse = await _authUseCases.login.execute(ssoEntity);
+    state = AsyncValue.data(state.value!.copyWith(memberInfo: memberEntityResponse, sso: ssoEntity));
+
+    // 회원가입 여부 확인
+    if (memberEntityResponse.isSignup) {
+      // TODO: Go to Home
+    } else {
+      state = AsyncValue.data(state.value!.copyWith(sso: ssoEntity));
     }
   }
 

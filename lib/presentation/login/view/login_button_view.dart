@@ -12,24 +12,26 @@ class LoginButtonsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authServiceNotifier = ref.read(authServiceProvider.notifier);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         children: [
           TicatsSSOButton(
             type: SSOType.kakao,
-            onPressed: () async => await ref.read(authServiceProvider.notifier).login(LoginProvider.kakao),
+            onPressed: () async => await authServiceNotifier.login(LoginProvider.kakao),
           ),
           SizedBox(height: 16.h),
           TicatsSSOButton(
             type: SSOType.google,
-            onPressed: () async => await ref.read(authServiceProvider.notifier).login(LoginProvider.google),
+            onPressed: () async => await authServiceNotifier.login(LoginProvider.google),
           ),
           if (Platform.isIOS) ...[
             SizedBox(height: 16.h),
             TicatsSSOButton(
               type: SSOType.apple,
-              onPressed: () async => await ref.read(authServiceProvider.notifier).login(LoginProvider.apple),
+              onPressed: () async => await authServiceNotifier.login(LoginProvider.apple),
             ),
           ],
         ],
