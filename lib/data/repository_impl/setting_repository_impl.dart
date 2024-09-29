@@ -1,16 +1,16 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ticats_app/data/data_source/local/secure_storage_data_source_impl.dart';
-import 'package:ticats_app/data/data_source/local/settings_local_data_source.dart';
+import 'package:ticats_app/data/data_source/local/setting_local_data_source.dart';
 import 'package:ticats_app/data/data_source/local/shared_pref_data_source_impl.dart';
-import 'package:ticats_app/domain/repository/settings_repository.dart';
+import 'package:ticats_app/domain/repository/setting_repository.dart';
 
-part 'settings_repository_impl.g.dart';
+part 'setting_repository_impl.g.dart';
 
-class SettingsRepositoryImpl implements SettingsRepository {
-  SettingsRepositoryImpl(this._sharedPrefDataSource, this._secureStorageDataSource);
+class SettingRepositoryImpl implements SettingRepository {
+  SettingRepositoryImpl(this._sharedPrefDataSource, this._secureStorageDataSource);
 
-  final SettingsLocalDataSource _sharedPrefDataSource;
-  final SettingsLocalDataSource _secureStorageDataSource;
+  final SettingLocalDataSource _sharedPrefDataSource;
+  final SettingLocalDataSource _secureStorageDataSource;
 
   @override
   Future<void> clearSetting() async {
@@ -44,7 +44,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
 }
 
 @Riverpod(keepAlive: true)
-Future<void> initializeSettings(InitializeSettingsRef ref) async {
+Future<void> initializeSetting(InitializeSettingRef ref) async {
   final sharedPrefDataSource = ref.read(sharedPreferencesDataSourceProvider);
   final secureStorageDataSource = ref.read(secureStorageDataSourceProvider);
 
@@ -53,11 +53,11 @@ Future<void> initializeSettings(InitializeSettingsRef ref) async {
 }
 
 @Riverpod(keepAlive: true)
-SettingsRepository settingsRepository(SettingsRepositoryRef ref) {
-  ref.watch(initializeSettingsProvider);
+SettingRepository settingRepository(SettingRepositoryRef ref) {
+  ref.watch(initializeSettingProvider);
 
   final sharedPrefDataSource = ref.read(sharedPreferencesDataSourceProvider);
   final secureStorageDataSource = ref.read(secureStorageDataSourceProvider);
 
-  return SettingsRepositoryImpl(sharedPrefDataSource, secureStorageDataSource);
+  return SettingRepositoryImpl(sharedPrefDataSource, secureStorageDataSource);
 }

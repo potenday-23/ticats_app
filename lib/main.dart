@@ -6,7 +6,7 @@ import 'package:talker_flutter/talker_flutter.dart';
 import 'package:talker_riverpod_logger/talker_riverpod_logger.dart';
 import 'package:ticats_app/app/config/app_router.dart';
 import 'package:ticats_app/app/config/app_theme.dart';
-import 'package:ticats_app/data/repository_impl/settings_repository_impl.dart';
+import 'package:ticats_app/data/repository_impl/setting_repository_impl.dart';
 
 Future<void> main() async {
   // Wait for the dependencies to be configured
@@ -24,7 +24,7 @@ Future<void> main() async {
   );
 
   // Initialize settings
-  await container.read(initializeSettingsProvider.future);
+  await container.read(initializeSettingProvider.future);
 
   runApp(
     UncontrolledProviderScope(

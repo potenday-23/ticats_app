@@ -1,4 +1,4 @@
-abstract class SettingsLocalDataSource {
+abstract class SettingLocalDataSource {
   dynamic init();
   Future<void> clearSetting();
   dynamic loadSetting(String key);
