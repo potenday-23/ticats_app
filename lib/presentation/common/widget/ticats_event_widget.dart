@@ -25,23 +25,27 @@ class TicatsEventWidget extends ConsumerWidget {
 
   factory TicatsEventWidget.small({
     required CulturalEventEntity event,
-    TicatsEventStatus status = TicatsEventStatus.ticketOpen,
   }) =>
       TicatsEventWidget(
         event: event,
         width: 132.w,
         imageHeight: 174.w,
+        status: event.isOpened ?? false
+            ? TicatsEventStatus.ticketOpen
+            : TicatsEventStatus.ticketReservation,
         hasCategoryChip: true,
       );
 
   factory TicatsEventWidget.big({
     required CulturalEventEntity event,
-    TicatsEventStatus status = TicatsEventStatus.ticketOpen,
   }) =>
       TicatsEventWidget(
         event: event,
         width: 167.w,
         imageHeight: 221.w,
+        status: event.isOpened ?? false
+            ? TicatsEventStatus.ticketOpen
+            : TicatsEventStatus.ticketReservation,
       );
 
   final CulturalEventEntity event;
@@ -100,12 +104,14 @@ class TicatsEventWidget extends ConsumerWidget {
               ],
             ),
             SizedBox(height: 4.h),
+            // TODO: big일 때는 Row, small일 때는 Column으로 분기 필요
             if (status == TicatsEventStatus.ticketReservation) ...[
               FittedBox(
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const TicatsEventStatusChip(),
-                    SizedBox(width: 4.w),
+                    SizedBox(height: 4.h),
                     Text(
                       event.ticketOpenDate != null ? DateFormat("yyyy.MM.dd hh:mm").format(event.ticketOpenDate!) : "",
                       style: AppTypeface.label12Bold.copyWith(color: AppColor.systemError),
