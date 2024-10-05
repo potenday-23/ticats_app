@@ -30,27 +30,27 @@ class TicatsChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(16.w, 8.w, 16.w, 8.w),
-      decoration: BoxDecoration(
-        color: AppColor.white,
-        border: Border.all(color: AppGrayscale.gray85),
-        borderRadius: AppRadius.full,
-        shape: BoxShape.rectangle,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(text, style: textStyle ?? AppTypeface.label14Medium.copyWith(color: AppGrayscale.gray20)),
-          if (icon != null) ...[
-            SizedBox(width: 6.w),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: onTap,
-              child: Icon(icon, size: 20.w, color: AppGrayscale.gray20),
-            )
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.fromLTRB(16.w, 8.w, 16.w, 8.w),
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          border: Border.all(color: AppGrayscale.gray85),
+          borderRadius: AppRadius.full,
+          shape: BoxShape.rectangle,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(text, style: textStyle ?? AppTypeface.label14Medium.copyWith(color: AppGrayscale.gray20)),
+            if (icon != null) ...[
+              SizedBox(width: 6.w),
+              Icon(icon, size: 20.w, color: AppGrayscale.gray20),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
