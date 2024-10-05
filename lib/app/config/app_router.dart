@@ -17,6 +17,9 @@ class Routes {
   // Main
   static const String main = '/main';
 
+  // Event List
+  static const String eventListOfCategory = '/eventList/category';
+
   // Register
   static const String registerProfile = 'profile';
   static const String registerAccount = 'account';
