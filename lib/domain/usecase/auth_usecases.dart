@@ -37,7 +37,7 @@ class GetMemberUseCase {
 
   GetMemberUseCase(this._repository);
 
-  Future<MemberEntity> execute() => _repository.getMe();
+  Future<MemberEntity> execute() async => await _repository.getMe();
 }
 
 class ValidateNicknameUseCase {
@@ -45,7 +45,7 @@ class ValidateNicknameUseCase {
 
   ValidateNicknameUseCase(this._repository);
 
-  Future<bool> execute(String nickname) => _repository.getNickValid(nickname);
+  Future<bool> execute(String nickname) async => await _repository.getNickValid(nickname);
 }
 
 class LoginUseCase {
@@ -53,7 +53,7 @@ class LoginUseCase {
 
   LoginUseCase(this._repository);
 
-  Future<MemberEntity> execute(SsoLoginEntity oauthLogin) => _repository.login(oauthLogin);
+  Future<MemberEntity> execute(SsoLoginEntity oauthLogin) async => await _repository.login(oauthLogin);
 }
 
 class SetFCMTokenUseCase {
@@ -61,7 +61,7 @@ class SetFCMTokenUseCase {
 
   SetFCMTokenUseCase(this._repository);
 
-  Future<bool> execute(String fcmToken) => _repository.setFCMToken(fcmToken);
+  Future<bool> execute(String fcmToken) async => await _repository.setFCMToken(fcmToken);
 }
 
 class UpdateUserInfoUseCase {
@@ -69,7 +69,7 @@ class UpdateUserInfoUseCase {
 
   UpdateUserInfoUseCase(this._repository);
 
-  Future<MemberEntity> execute(MemberInfoEntity memberInfo) => _repository.setUserInfo(memberInfo);
+  Future<MemberEntity?> execute(MemberInfoEntity memberInfo) async => await _repository.setUserInfo(memberInfo);
 }
 
 class LoadMemberUseCase {

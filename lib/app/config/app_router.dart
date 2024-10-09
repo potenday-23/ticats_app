@@ -4,7 +4,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ticats_app/presentation/login/login_page.dart';
 import 'package:ticats_app/presentation/main/main_page.dart';
 import 'package:ticats_app/presentation/register/register_account_page.dart';
+import 'package:ticats_app/presentation/register/register_permission_page.dart';
 import 'package:ticats_app/presentation/register/register_profile_page.dart';
+import 'package:ticats_app/presentation/register/register_select_entertainment_page.dart';
 
 part 'app_router.g.dart';
 
@@ -15,9 +17,11 @@ class Routes {
   // Main
   static const String main = '/main';
 
-  // register
-  static const String registerProfile = '/register/profile';
-  static const String registerAccount = '/register/account';
+  // Register
+  static const String registerProfile = 'profile';
+  static const String registerAccount = 'account';
+  static const String registerPermission = 'permission';
+  static const String registerSelectEntertianment = 'select-entertainment';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -44,14 +48,30 @@ class Router extends _$Router {
 
         // Register
         GoRoute(
-          path: Routes.registerProfile,
-          name: Routes.registerProfile,
+          path: '/register',
           builder: (context, state) => const RegisterProfilePage(),
-        ),
-        GoRoute(
-          path: Routes.registerAccount,
-          name: Routes.registerAccount,
-          builder: (context, state) => const RegisterAccountPage(),
+          routes: [
+            GoRoute(
+              path: 'profile',
+              name: Routes.registerProfile,
+              builder: (context, state) => const RegisterProfilePage(),
+            ),
+            GoRoute(
+              path: 'account',
+              name: Routes.registerAccount,
+              builder: (context, state) => const RegisterAccountPage(),
+            ),
+            GoRoute(
+              path: 'permission',
+              name: Routes.registerPermission,
+              builder: (context, state) => const RegisterPermissionPage(),
+            ),
+            GoRoute(
+              path: 'select-entertainment',
+              name: Routes.registerSelectEntertianment,
+              builder: (context, state) => const RegisterSelectEntertainmentPage(),
+            ),
+          ],
         ),
       ],
     );

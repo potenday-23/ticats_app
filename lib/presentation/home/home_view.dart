@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticats_app/app/base/base_page.dart';
 import 'package:ticats_app/app/config/app_color.dart';
+import 'package:ticats_app/app/service/auth_service.dart';
+import 'package:ticats_app/domain/entity/auth/member_entity.dart';
 import 'package:ticats_app/gen/assets.gen.dart';
 import 'package:ticats_app/presentation/common/app_bar/ticats_app_bar.dart';
 import 'package:ticats_app/presentation/main/provider/main_page_provider.dart';
@@ -17,6 +19,8 @@ class HomeView extends BasePage {
 
   @override
   Widget buildPage(BuildContext context, WidgetRef ref) {
+    final MemberEntity? member = ref.read(authServiceProvider).value?.memberInfo;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -26,7 +30,7 @@ class HomeView extends BasePage {
           const HomeCategoryView(),
           SizedBox(height: 20.h),
           HomeEventView(
-            title: "닉네임 님을 위한 추천",
+            title: "${member?.nickname} 님을 위한 추천",
             eventViewType: HomeEventViewType.recommend,
             onTap: () {},
           ),

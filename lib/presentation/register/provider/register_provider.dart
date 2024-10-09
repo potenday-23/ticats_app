@@ -1,9 +1,12 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ticats_app/app/extension/input_extension.dart';
 import 'package:ticats_app/app/service/auth_service.dart';
+import 'package:ticats_app/domain/entity/auth/member_entity.dart';
 import 'package:ticats_app/domain/entity/auth/member_info_entity.dart';
 import 'package:ticats_app/domain/entity/auth/sso_login_entity.dart';
+import 'package:ticats_app/domain/usecase/auth_usecases.dart';
 
 part 'register_provider.g.dart';
 
@@ -14,6 +17,18 @@ class Register extends _$Register {
     final SsoLoginEntity ssoLoginEntity = ref.read(authServiceProvider).value!.sso!;
 
     return MemberInfoEntity(provider: ssoLoginEntity.socialType, email: ssoLoginEntity.email);
+  }
+
+  Future<bool> updateUserInfo(MemberInfoEntity memberInfo) async {
+    final MemberEntity? member = await ref.read(authUseCasesProvider).updateUserInfo.execute(memberInfo);
+
+    if (member != null) {
+      ref.read(authServiceProvider.notifier).setMemberInfo(member);
+      return true;
+    } else {
+      await Fluttertoast.showToast(msg: "회원가입에 실패하였습니다. 잠시 후 다시 시도해주세요.");
+      return false;
+    }
   }
 
   bool get canSignUp => state.email!.isValidEmail() && state.birthday != null && state.gender!.isNotEmpty;

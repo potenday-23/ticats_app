@@ -1,35 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticats_app/app/config/app_radius.dart';
+import 'package:ticats_app/app/config/app_router.dart';
 import 'package:ticats_app/app/config/app_typeface.dart';
+import 'package:ticats_app/app/enum/sso_type.enum.dart';
+import 'package:ticats_app/app/service/auth_service.dart';
 
-enum SSOType {
-  kakao("카카오", Color(0xFFFFE300)),
-  google("Google", Colors.white),
-  apple("Apple", Colors.black, Colors.white);
-
-  final String label;
-  final Color bgColor;
-  final Color textColor;
-
-  const SSOType(this.label, this.bgColor, [this.textColor = Colors.black]);
-}
-
-class TicatsSSOButton extends StatelessWidget {
-  const TicatsSSOButton({
-    super.key,
-    required this.type,
-    required this.onPressed,
-  });
+class TicatsSSOButton extends ConsumerWidget {
+  const TicatsSSOButton({super.key, required this.type});
 
   final SSOType type;
-  final VoidCallback onPressed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: () async => await login(ref, type),
       behavior: HitTestBehavior.translucent,
       child: Container(
         height: 56.w,
@@ -45,5 +33,19 @@ class TicatsSSOButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> login(WidgetRef ref, SSOType type) async {
+    bool loginResult = await ref.read(authServiceProvider.notifier).login(type);
+    if (loginResult) {
+      ref.read(routerProvider).go(Routes.main);
+      return;
+    }
+
+    if (ref.read(authServiceProvider).value!.sso != null) {
+      ref.read(routerProvider).goNamed(Routes.registerProfile);
+    } else {
+      Fluttertoast.showToast(msg: "로그인에 실패하였습니다. 잠시 후 다시 시도해주세요.");
+    }
   }
 }

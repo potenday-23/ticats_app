@@ -3,8 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:ticats_app/app/config/app_router.dart';
-import 'package:ticats_app/app/enum/login_provider.enum.dart';
+import 'package:ticats_app/app/enum/sso_type.enum.dart';
 import 'package:ticats_app/domain/entity/auth/member_entity.dart';
 import 'package:ticats_app/domain/entity/auth/sso_login_entity.dart';
 import 'package:ticats_app/domain/entity/state/auth_state.dart';
@@ -28,30 +27,30 @@ class AuthService extends _$AuthService {
     return AuthState(memberInfo: memberInfo);
   }
 
-  Future<void> login(LoginProvider provider) async {
+  Future<bool> login(SSOType type) async {
     final SsoLoginEntity? ssoEntity;
 
-    if (provider == LoginProvider.apple) {
+    if (type == SSOType.apple) {
       ssoEntity = await _loginWithApple();
-    } else if (provider == LoginProvider.google) {
+    } else if (type == SSOType.google) {
       ssoEntity = await _loginWithGoogle();
-    } else if (provider == LoginProvider.kakao) {
+    } else if (type == SSOType.kakao) {
       ssoEntity = await _loginWithKakao();
     } else {
       ssoEntity = null;
     }
 
-    if (ssoEntity == null) return;
+    if (ssoEntity == null) return false;
 
     MemberEntity memberEntityResponse = await _authUseCases.login.execute(ssoEntity);
     state = AsyncValue.data(state.value!.copyWith(memberInfo: memberEntityResponse, sso: ssoEntity));
 
     // 회원가입 여부 확인
     if (memberEntityResponse.isSignup) {
-      // TODO: Go to Home
+      return true;
     } else {
       state = AsyncValue.data(state.value!.copyWith(sso: ssoEntity));
-      ref.read(routerProvider).pushNamed(Routes.registerProfile);
+      return false;
     }
   }
 
@@ -108,5 +107,9 @@ class AuthService extends _$AuthService {
     }
 
     return null;
+  }
+
+  void setMemberInfo(MemberEntity memberInfo) {
+    state = AsyncValue.data(state.value!.copyWith(memberInfo: memberInfo));
   }
 }

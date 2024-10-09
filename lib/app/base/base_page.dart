@@ -37,6 +37,7 @@ abstract class BasePage extends HookConsumerWidget {
 
     return PopScope(
       canPop: canPop,
+      // ignore: deprecated_member_use
       onPopInvoked: (didPop) async {
         if (didPop) return;
         onWillPop(ref);

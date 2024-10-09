@@ -7,5 +7,5 @@ abstract class AuthRepository {
   Future<bool> getNickValid(String nickname);
   Future<MemberEntity> login(SsoLoginEntity oauthLogin);
   Future<bool> setFCMToken(String fcmToken);
-  Future<MemberEntity> setUserInfo(MemberInfoEntity memberInfo);
+  Future<MemberEntity?> setUserInfo(MemberInfoEntity memberInfo);
 }
