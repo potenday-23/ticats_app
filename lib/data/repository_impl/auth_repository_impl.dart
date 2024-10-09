@@ -55,10 +55,14 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<MemberEntity> setUserInfo(MemberInfoEntity memberInfo) async {
-    final MemberModel response = await _api.setUserInfo(memberInfo);
+  Future<MemberEntity?> setUserInfo(MemberInfoEntity memberInfo) async {
+    try {
+      final MemberModel response = await _api.setUserInfo(memberInfo);
 
-    return response.toEntity();
+      return response.toEntity();
+    } catch (e) {
+      return null;
+    }
   }
 }
 

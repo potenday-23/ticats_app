@@ -105,7 +105,7 @@ class TermAgreeView extends ConsumerWidget {
         textAlign: TextAlign.center,
       ),
       text: "알림 받기",
-      leftPressed: () => ref.read(routerProvider).pop(),
+      leftPressed: () => _goNext(ref),
       onPressed: () async {
         notifier.toggleTerm(TermEnum.marketingPolicy);
         ref.read(routerProvider).pop();
@@ -128,8 +128,13 @@ class TermAgreeView extends ConsumerWidget {
           ),
         ],
       ),
-      onPressed: () => ref.read(routerProvider).pop(),
+      onPressed: () => _goNext(ref),
     );
+  }
+
+  void _goNext(WidgetRef ref) {
+    ref.read(routerProvider).pop();
+    ref.read(routerProvider).goNamed(Routes.registerPermission);
   }
 }
 

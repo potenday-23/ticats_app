@@ -64,7 +64,7 @@ class _RegisterProfileButton extends ConsumerWidget {
       onPressed: () {
         registerNotifier.setNickname(nickInputState.controller.text);
         registerNotifier.resetAccount();
-        ref.read(routerProvider).pushNamed(Routes.registerAccount);
+        ref.read(routerProvider).goNamed(Routes.registerAccount);
       },
       isEnabled: nickInputState.isValid,
     );
