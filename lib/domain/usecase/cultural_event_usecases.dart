@@ -12,6 +12,7 @@ class CulturalEventUsecases {
   final CulturalEventRepository _repository;
 
   GetEventInfo get getEventInfo => GetEventInfo(_repository);
+  GetEvents get getEvents => GetEvents(_repository);
   GetOpenDateEvents get getOpenDateEvents => GetOpenDateEvents(_repository);
   GetPointEvents get getPointEvents => GetPointEvents(_repository);
   GetRecommendEvents get getRecommendEvents => GetRecommendEvents(_repository);
@@ -24,6 +25,16 @@ class GetEventInfo {
 
   Future<CulturalEventEntity> execute(String id) async {
     return await _repository.getCulturalEventInfo(id);
+  }
+}
+
+class GetEvents {
+  final CulturalEventRepository _repository;
+
+  GetEvents(this._repository);
+
+  Future<List<CulturalEventEntity>> execute(CulturalEventsSearchEntity request) async {
+    return await _repository.getCulturalEvents(request);
   }
 }
 
