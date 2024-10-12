@@ -22,6 +22,12 @@ class CulturalEventRepositoryImpl implements CulturalEventRepository {
   }
 
   @override
+  Future<List<CulturalEventEntity>> getCulturalEvents(CulturalEventsSearchEntity queries) async {
+    CulturalEventsModel response = await _api.getCulturalEvents(queries);
+    return response.toEntityList();
+  }
+
+  @override
   Future<List<CulturalEventEntity>> getOpenDateEvents(CulturalEventsSearchEntity queries) async {
     queries = queries.copyWith(isOpened: false, ordering: "ticketOpenDate");
 
