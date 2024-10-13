@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ticats_app/app/enum/ticats_event_category.enum.dart';
+import 'package:ticats_app/app/enum/ticats_event_ordering.enum.dart';
 import 'package:ticats_app/domain/entity/cultural_event/cultural_event_entity.dart';
 import 'package:ticats_app/domain/entity/cultural_event/cultural_events_search_entity.dart';
 import 'package:ticats_app/domain/usecase/cultural_event_usecases.dart';
@@ -35,6 +36,17 @@ class EventListController extends _$EventListController {
     if (state.value == null) return [];
 
     return state.value!.events;
+  }
+
+  void selectOrdering(TicatsEventOrdering ordering) {
+    state = AsyncValue.data(
+        state.value!.copyWith(
+            filter: state.value!.filter.copyWith(
+                ordering: ordering.name
+            )
+        )
+    );
+    _fetchEvents();
   }
 
   void setFilter(CulturalEventsSearchEntity filter) {
