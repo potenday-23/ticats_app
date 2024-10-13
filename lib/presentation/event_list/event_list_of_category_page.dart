@@ -7,8 +7,8 @@ import 'package:ticats_app/presentation/common/app_bar/ticats_app_bar.dart';
 import 'package:ticats_app/presentation/event_list/view/event_list_event_view.dart';
 import 'package:ticats_app/presentation/event_list/view/event_list_filter_view.dart';
 
-class EventListOfCategory extends BasePage {
-  const EventListOfCategory({required this.categoryName, super.key});
+class EventListOfCategoryPage extends BasePage {
+  const EventListOfCategoryPage({required this.categoryName, super.key});
   final String categoryName;
 
   @override

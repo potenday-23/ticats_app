@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:ticats_app/presentation/event_list/event_list_of_category_page.dart';
 import 'package:ticats_app/presentation/login/login_page.dart';
 import 'package:ticats_app/presentation/main/main_page.dart';
 import 'package:ticats_app/presentation/register/register_account_page.dart';
@@ -47,6 +48,13 @@ class Router extends _$Router {
         GoRoute(
           path: Routes.main,
           builder: (context, state) => const MainPage(),
+        ),
+
+        // Event List
+        GoRoute(
+          path: Routes.eventListOfCategory,
+          name: Routes.eventListOfCategory,
+          builder: (context, state) => EventListOfCategoryPage(categoryName: state.uri.queryParameters['category'] as String),
         ),
 
         // Register
