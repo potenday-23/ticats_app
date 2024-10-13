@@ -34,10 +34,10 @@ class Router extends _$Router {
         GoRoute(
           path: Routes.eventListOfCategory,
           name: Routes.eventListOfCategory,
-          builder: (context, state) => EventListOfCategory(
+          builder: (context, state) => EventListOfCategoryPage(
               categoryName: state.uri.queryParameters['category'] as String
           )
-        )
+        ),
       ],
     );
   }
