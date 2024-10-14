@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ticats_app/app/config/app_color.dart';
 import 'package:ticats_app/app/config/app_radius.dart';
@@ -58,7 +59,9 @@ class TicatsEventWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {},
+      onTap: () {
+        context.push('/eventDetail');
+      },
       child: SizedBox(
         width: width,
         child: Column(
