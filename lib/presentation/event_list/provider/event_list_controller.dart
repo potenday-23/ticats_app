@@ -29,7 +29,12 @@ class EventListController extends _$EventListController {
           categories: [_categoryNameToEnumString(categoryName ?? '')]
         )
     );
-    return EventListState(events: result);
+    return EventListState(
+        events: result,
+        filter: CulturalEventsSearchEntity(
+          categories: [_categoryNameToEnumString(categoryName ?? '')]
+        )
+    );
   }
 
   List<CulturalEventEntity> getEventList() {
@@ -38,7 +43,7 @@ class EventListController extends _$EventListController {
     return state.value!.events;
   }
 
-  void selectOrdering(TicatsEventOrdering ordering) {
+  Future<void> selectOrdering(TicatsEventOrdering ordering) async {
     state = AsyncValue.data(
         state.value!.copyWith(
             filter: state.value!.filter.copyWith(
@@ -46,11 +51,12 @@ class EventListController extends _$EventListController {
             )
         )
     );
-    _fetchEvents();
-  }
 
-  void setFilter(CulturalEventsSearchEntity filter) {
-    state = AsyncValue.data(state.value!.copyWith(filter: filter));
+    state = AsyncValue.data(
+      state.value!.copyWith(
+        events: await _fetchEvents()
+      )
+    );
   }
 
   Future<List<CulturalEventEntity>> _fetchEvents({CulturalEventsSearchEntity? filter}) async {
@@ -58,6 +64,11 @@ class EventListController extends _$EventListController {
       await _culturalEventUseCase.getEvents.execute(
           filter ?? state.value?.filter ?? const CulturalEventsSearchEntity());
     return response;
+  }
+
+
+  void setFilter(CulturalEventsSearchEntity filter) {
+    state = AsyncValue.data(state.value!.copyWith(filter: filter));
   }
 
   String _categoryNameToEnumString(String categoryName) {

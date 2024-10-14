@@ -27,8 +27,8 @@ class EventListFilterView extends BaseView {
             showTicatFilterBottomSheet(
                 options: TicatsEventOrdering.values,
                 groupValue: TicatsEventOrdering.recommend,
-                onChanged: (value) {
-                  ref.read(eventListControllerProvider().notifier).selectOrdering(value);
+                onChanged: (value) async {
+                  await ref.read(eventListControllerProvider().notifier).selectOrdering(value);
                 });
           }),
           SizedBox(width: 8.w),
