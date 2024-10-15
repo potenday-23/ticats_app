@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticats_app/app/base/base_view.dart';
 import 'package:ticats_app/presentation/common/widget/async_value_widget.dart';
@@ -20,23 +19,16 @@ class EventListEventView extends BaseView {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16.w,
-                childAspectRatio: 167.w/323.w
-              ),
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 16.w, childAspectRatio: 167.w / 323.w),
               physics: const NeverScrollableScrollPhysics(),
               itemCount: eventList.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return SizedBox(
-                  child: TicatsEventWidget.big(event: eventList[index])
-                );
-              }
-          ),
+                return SizedBox(child: TicatsEventWidget.big(event: eventList[index]));
+              }),
         );
       },
     );
   }
-
 }

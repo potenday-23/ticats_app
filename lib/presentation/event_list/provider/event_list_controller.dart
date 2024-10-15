@@ -25,15 +25,15 @@ class EventListController extends _$EventListController {
   Future<EventListState> build({String? categoryName}) async {
     _culturalEventUseCase = ref.read(culturalEventUsecasesProvider);
     final result = await _fetchEvents(
-        filter: CulturalEventsSearchEntity(
-          categories: [_categoryNameToEnumString(categoryName ?? '')]
-        )
+      filter: CulturalEventsSearchEntity(
+        categories: [_categoryNameToEnumString(categoryName ?? '')],
+      ),
     );
     return EventListState(
-        events: result,
-        filter: CulturalEventsSearchEntity(
-          categories: [_categoryNameToEnumString(categoryName ?? '')]
-        )
+      events: result,
+      filter: CulturalEventsSearchEntity(
+        categories: [_categoryNameToEnumString(categoryName ?? '')],
+      ),
     );
   }
 
@@ -44,37 +44,27 @@ class EventListController extends _$EventListController {
   }
 
   Future<void> selectOrdering(TicatsEventOrdering ordering) async {
-    state = AsyncValue.data(
-        state.value!.copyWith(
-            filter: state.value!.filter.copyWith(
-                ordering: ordering.name
-            )
-        )
-    );
+    final newFilter = state.value!.filter.copyWith(ordering: ordering);
 
-    state = AsyncValue.data(
-      state.value!.copyWith(
-        events: await _fetchEvents()
-      )
-    );
+    state = AsyncValue.data(state.value!.copyWith(events: await _fetchEvents(filter: newFilter), filter: newFilter));
   }
 
   Future<List<CulturalEventEntity>> _fetchEvents({CulturalEventsSearchEntity? filter}) async {
     final List<CulturalEventEntity> response =
-      await _culturalEventUseCase.getEvents.execute(
-          filter ?? state.value?.filter ?? const CulturalEventsSearchEntity());
+        await _culturalEventUseCase.getEvents.execute(filter ?? state.value?.filter ?? const CulturalEventsSearchEntity());
     return response;
   }
-
 
   void setFilter(CulturalEventsSearchEntity filter) {
     state = AsyncValue.data(state.value!.copyWith(filter: filter));
   }
 
   String _categoryNameToEnumString(String categoryName) {
-    return TicatsEventCategory.values.firstWhere(
-            (e) => e.label == categoryName,
-        orElse: () => TicatsEventCategory.values.first,
-    ).name;
+    return TicatsEventCategory.values
+        .firstWhere(
+          (e) => e.label == categoryName,
+          orElse: () => TicatsEventCategory.values.first,
+        )
+        .name;
   }
 }
