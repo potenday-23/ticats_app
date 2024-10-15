@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:ticats_app/app/enum/ticats_event_ordering.enum.dart';
 import 'package:ticats_app/app/network/dio_provider.dart';
 import 'package:ticats_app/data/data_source/remote/cultural_event_api.dart';
 import 'package:ticats_app/data/model/cultural_event/cultural_event_model.dart';
@@ -28,7 +29,7 @@ class CulturalEventRepositoryImpl implements CulturalEventRepository {
 
   @override
   Future<List<CulturalEventEntity>> getOpenDateEvents(CulturalEventsSearchEntity queries) async {
-    queries = queries.copyWith(isOpened: false, ordering: "ticketOpenDate");
+    queries = queries.copyWith(isOpened: false, ordering: TicatsEventOrdering.ticketOpenData);
 
     CulturalEventsModel response = await _api.getCulturalEvents(queries);
     return response.toEntityList();
@@ -36,7 +37,7 @@ class CulturalEventRepositoryImpl implements CulturalEventRepository {
 
   @override
   Future<List<CulturalEventEntity>> getPointEvents(CulturalEventsSearchEntity quries) async {
-    quries = quries.copyWith(ordering: "point");
+    quries = quries.copyWith(ordering: TicatsEventOrdering.point);
 
     CulturalEventsModel response = await _api.getCulturalEvents(quries);
     return response.toEntityList();
@@ -44,7 +45,7 @@ class CulturalEventRepositoryImpl implements CulturalEventRepository {
 
   @override
   Future<List<CulturalEventEntity>> getRecommendEvents(CulturalEventsSearchEntity quries) async {
-    quries = quries.copyWith(ordering: "recommend");
+    quries = quries.copyWith(ordering: TicatsEventOrdering.recommend);
 
     CulturalEventsModel response = await _api.getCulturalEvents(quries);
     return response.toEntityList();
