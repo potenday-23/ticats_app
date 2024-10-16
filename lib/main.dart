@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -17,6 +18,9 @@ Future<void> main() async {
 
   // Initialize kakao sdk
   KakaoSdk.init(nativeAppKey: "e431334bbd653b087fa3bdc1d431c42e");
+
+  // Initialize Naver Map
+  await NaverMapSdk.instance.initialize();
 
   // Create provider container
   final container = ProviderContainer(
