@@ -65,7 +65,10 @@ class Router extends _$Router {
         GoRoute(
           path: Routes.eventDetail,
           name: Routes.eventDetail,
-          builder: (context, state) => EventDetailPage(int.parse(state.uri.queryParameters['id']!)),
+          builder: (context, state) => EventDetailPage(
+            id: int.parse(state.uri.queryParameters['id']!),
+            title: state.uri.queryParameters['title']!,
+          ),
         ),
 
         // Register
