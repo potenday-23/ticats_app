@@ -29,27 +29,29 @@ class EventDetailPlaceView extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.h),
-          Row(
-            children: [
-              Text(place?.address ?? '',
-                  style: AppTypeface.label14Medium.copyWith(color: AppGrayscale.gray40)
-              ),
-              SizedBox(width: 6.w),
-              GestureDetector(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: place?.address ?? ''));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('클립보드에 복사되었습니다.')),
-                  );
-                },
-                child: Row(
-                  children: [
-                    SvgPicture.asset(Assets.icons.copy.path, width: 20.w, height: 20.w),
-                    Text('주소 복사', style: AppTypeface.label12Regular.copyWith(color: AppGrayscale.gray40))
-                  ],
+          FittedBox(
+            child: Row(
+              children: [
+                Text(place?.address ?? '',
+                    style: AppTypeface.label14Medium.copyWith(color: AppGrayscale.gray40)
                 ),
-              ),
-            ],
+                SizedBox(width: 6.w),
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: place?.address ?? ''));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('클립보드에 복사되었습니다.')),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(Assets.icons.copy.path, width: 20.w, height: 20.w),
+                      Text('주소 복사', style: AppTypeface.label12Regular.copyWith(color: AppGrayscale.gray40))
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 10.h),
           SizedBox(
