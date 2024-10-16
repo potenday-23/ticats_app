@@ -7,6 +7,7 @@ import 'package:ticats_app/app/config/app_radius.dart';
 import 'package:ticats_app/app/config/app_typeface.dart';
 import 'package:ticats_app/domain/entity/cultural_event/cultural_event_entity.dart';
 import 'package:ticats_app/gen/assets.gen.dart';
+import 'package:ticats_app/presentation/common/widget/ticats_event_status_chip.dart';
 
 class EventDetailInfoView extends StatelessWidget {
   final CulturalEventEntity event;
@@ -54,7 +55,6 @@ class EventDetailInfoView extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (event.startDate != null && event.endDate != null) ...[
                     Row(
                       children: [
                         SvgPicture.asset(
@@ -63,10 +63,18 @@ class EventDetailInfoView extends StatelessWidget {
                           height: 20.w,
                         ),
                         SizedBox(width: 4.w),
-                        Text('${DateFormat("yyyy.MM.dd").format(event.startDate!)} ~ ${DateFormat("yyyy.MM.dd").format(event.endDate!)}', style: AppTypeface.label14SemiBold)
+                        if (event.isOpened!) ...[
+                          Text('${DateFormat("yyyy.MM.dd").format(event.startDate!)} ~ ${DateFormat("yyyy.MM.dd").format(event.endDate!)}', style: AppTypeface.label14SemiBold)
+                        ] else ...[
+                          const TicatsEventStatusChip(),
+                          SizedBox(width: 4.w),
+                          Text(
+                            event.ticketOpenDate != null ? DateFormat("yyyy.MM.dd hh:mm").format(event.ticketOpenDate!) : "",
+                            style: AppTypeface.label12Bold.copyWith(color: AppColor.systemError),
+                          ),
+                        ]
                       ],
                     ),
-                  ],
                   if (event.runningTime != null) ...[
                     SizedBox(height: 6.h),
                     Row(
