@@ -17,7 +17,6 @@ class CulturalEventRepositoryImpl implements CulturalEventRepository {
   @override
   Future<CulturalEventEntity> getCulturalEventInfo(String id) async {
     CulturalEventModel response = await _api.getCulturalEventInfo(id);
-
     return response.toEntity();
   }
 

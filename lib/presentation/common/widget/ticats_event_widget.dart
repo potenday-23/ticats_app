@@ -60,7 +60,8 @@ class TicatsEventWidget extends ConsumerWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        context.pushNamed('/eventDetail', queryParameters: {'id': event.id.toString()});
+        context.pushNamed('/eventDetail',
+            queryParameters: {'id': event.id.toString(), 'title': event.title});
       },
       child: SizedBox(
         width: width,
