@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:ticats_app/domain/entity/cultural_event/ticketing_site_entity.dart';
 
 import 'place_entity.dart';
 
@@ -25,7 +26,7 @@ class CulturalEventEntity with _$CulturalEventEntity {
     int? visitCount,
     bool? isLiked,
     bool? isOpened,
-    List<String>? ticketingSites,
+    List<TicketingSiteEntity>? ticketingSiteList,
     List<String>? informationList,
   }) = _CulturalEventEntity;
 
