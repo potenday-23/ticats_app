@@ -19,6 +19,7 @@ class TicatsEventWidget extends ConsumerWidget {
     required this.event,
     required this.width,
     required this.imageHeight,
+    required this.isBig,
     this.status = TicatsEventStatus.ticketOpen,
     this.hasCategoryChip = false,
     super.key,
@@ -31,6 +32,7 @@ class TicatsEventWidget extends ConsumerWidget {
         event: event,
         width: 132.w,
         imageHeight: 174.w,
+        isBig: false,
         status: event.isOpened ?? false
             ? TicatsEventStatus.ticketOpen
             : TicatsEventStatus.ticketReservation,
@@ -44,6 +46,7 @@ class TicatsEventWidget extends ConsumerWidget {
         event: event,
         width: 167.w,
         imageHeight: 221.w,
+        isBig: true,
         status: event.isOpened ?? false
             ? TicatsEventStatus.ticketOpen
             : TicatsEventStatus.ticketReservation,
@@ -54,6 +57,7 @@ class TicatsEventWidget extends ConsumerWidget {
   final double width;
   final double imageHeight;
   final bool hasCategoryChip;
+  final bool isBig;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -108,10 +112,20 @@ class TicatsEventWidget extends ConsumerWidget {
               ],
             ),
             SizedBox(height: 4.h),
-            // TODO: big일 때는 Row, small일 때는 Column으로 분기 필요
             if (status == TicatsEventStatus.ticketReservation) ...[
               FittedBox(
-                child: Column(
+                child: isBig
+                    ? Row(
+                    children: [
+                      const TicatsEventStatusChip(),
+                      SizedBox(width: 4.w),
+                      Text(
+                        event.ticketOpenDate != null ? DateFormat("yyyy.MM.dd hh:mm").format(event.ticketOpenDate!) : "",
+                        style: AppTypeface.label12Bold.copyWith(color: AppColor.systemError),
+                      ),
+                    ]
+                )
+                    : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const TicatsEventStatusChip(),
