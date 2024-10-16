@@ -7,7 +7,7 @@ part 'place_model.g.dart';
 @freezed
 class PlaceModel with _$PlaceModel {
   const factory PlaceModel({
-    @Default("") String title,
+    @Default("") String name,
     @Default("") String address,
     @Default(0.0) double latitude,
     @Default(0.0) double longitude,
@@ -19,7 +19,7 @@ class PlaceModel with _$PlaceModel {
 extension PlaceModelX on PlaceModel {
   PlaceEntity toEntity() {
     return PlaceEntity(
-      title: title,
+      name: name,
       address: address,
       latitude: latitude,
       longitude: longitude,

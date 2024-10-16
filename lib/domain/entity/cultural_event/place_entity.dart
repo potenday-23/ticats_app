@@ -6,7 +6,7 @@ part 'place_entity.g.dart';
 @freezed
 class PlaceEntity with _$PlaceEntity {
   const factory PlaceEntity({
-    @Default("") String title,
+    @Default("") String name,
     @Default("") String address,
     @Default(0.0) double latitude,
     @Default(0.0) double longitude,
