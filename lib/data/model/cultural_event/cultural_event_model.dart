@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:ticats_app/data/model/cultural_event/ticketing_site_model.dart';
 import 'package:ticats_app/domain/entity/cultural_event/cultural_event_entity.dart';
 
 import 'place_model.dart';
@@ -26,7 +27,7 @@ class CulturalEventModel with _$CulturalEventModel {
     int? visitCount,
     bool? isLiked,
     bool? isOpened,
-    List<String>? ticketingSites,
+    List<TicketingSiteModel>? ticketingSiteList,
     List<String>? informationList,
   }) = _CulturalEventModel;
 
@@ -53,7 +54,7 @@ extension CulturalEventModelX on CulturalEventModel {
       visitCount: visitCount,
       isLiked: isLiked,
       isOpened: isOpened,
-      ticketingSites: ticketingSites,
+      ticketingSiteList: ticketingSiteList?.map((e) => e.toEntity()).toList(),
       informationList: informationList,
     );
   }
