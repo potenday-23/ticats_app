@@ -58,12 +58,10 @@ class EventListController extends _$EventListController {
   }
 
   Future<void> scrollData() async {
-    print(state);
-    print('스테이트');
     final newFilter = state.value!.filter.copyWith(page: state.value!.filter.page + 1);
+    final newEvents = await _fetchEvents(filter: newFilter);
 
-    state = AsyncValue.data(state.value!.copyWith(
-        events: await _fetchEvents(filter: newFilter), filter: newFilter));
+    state = AsyncValue.data(state.value!.copyWith(events: [...state.value!.events, ...newEvents], filter: newFilter));
   }
 
   Future<List<CulturalEventEntity>> _fetchEvents({CulturalEventsSearchEntity? filter}) async {

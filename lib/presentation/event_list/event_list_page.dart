@@ -20,9 +20,9 @@ class EventListPage extends BasePage {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20.h),
-          EventListFilterView(),
+          const EventListFilterView(),
           SizedBox(height: 40.h),
-          EventListEventView(scrollController: _scrollController,),
+          const EventListEventView(),
         ],
       ),
     );
