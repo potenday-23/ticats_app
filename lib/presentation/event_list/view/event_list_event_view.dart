@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticats_app/app/base/base_view.dart';
@@ -7,8 +8,20 @@ import 'package:ticats_app/presentation/common/widget/ticats_event_widget.dart';
 import 'package:ticats_app/presentation/event_list/provider/event_list_controller.dart';
 
 class EventListEventView extends BaseView {
-  const EventListEventView({super.key, this.categoryName});
+  const EventListEventView({super.key, this.categoryName, required this.scrollController});
   final String? categoryName;
+  final ScrollController scrollController;
+
+  @override
+  void onInit(WidgetRef ref) {
+    super.onInit(ref);
+    scrollController.addListener(() {
+      if (scrollController.position.pixels
+          == scrollController.position.maxScrollExtent) {
+        ref.read(eventListControllerProvider().notifier).scrollData();
+      }
+    });
+  }
 
   @override
   Widget buildView(BuildContext context, WidgetRef ref) {
