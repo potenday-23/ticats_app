@@ -12,7 +12,7 @@ class CulturalEventsSearchEntity with _$CulturalEventsSearchEntity {
     String? keyword,
     double? latitude,
     double? longitude,
-    @Default(TicatsEventOrdering.ticketOpenData) @TicatsEventOrderingConverter() TicatsEventOrdering? ordering,
+    @Default(TicatsEventOrdering.ticketOpenDate) @TicatsEventOrderingConverter() TicatsEventOrdering? ordering,
     @Default(0) int page,
     @Default(10) int size,
   }) = _CulturalEventsSearchEntity;

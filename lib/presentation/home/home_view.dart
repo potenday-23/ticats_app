@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ticats_app/app/base/base_page.dart';
 import 'package:ticats_app/app/config/app_color.dart';
+import 'package:ticats_app/app/config/app_router.dart';
 import 'package:ticats_app/gen/assets.gen.dart';
 import 'package:ticats_app/presentation/common/app_bar/ticats_app_bar.dart';
 import 'package:ticats_app/presentation/main/provider/main_page_provider.dart';
@@ -28,19 +30,19 @@ class HomeView extends BasePage {
           HomeEventView(
             title: "닉네임 님을 위한 추천",
             eventViewType: HomeEventViewType.recommend,
-            onTap: () {},
+            onTap: () => context.pushNamed(Routes.eventList, queryParameters: {'title': '닉네임 님을 위한 추천'}),
           ),
           SizedBox(height: 40.h),
           HomeEventView(
             title: "인기 급상승 문화생활",
             eventViewType: HomeEventViewType.point,
-            onTap: () {},
+            onTap: () => context.pushNamed(Routes.eventList, queryParameters: {'title': '인기 급상승 문화생활'}),
           ),
           SizedBox(height: 40.h),
           HomeEventView(
             title: "오픈 예정 문화생활",
             eventViewType: HomeEventViewType.openDate,
-            onTap: () {},
+            onTap: () => context.pushNamed(Routes.eventList, queryParameters: {'title': '오픈 예정 문화생활'}),
           ),
           SizedBox(height: 40.h),
         ],

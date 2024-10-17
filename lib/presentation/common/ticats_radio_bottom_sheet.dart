@@ -5,7 +5,7 @@ import 'package:ticats_app/app/config/app_router.dart';
 import 'package:ticats_app/app/config/app_typeface.dart';
 import 'package:ticats_app/app/enum/ticats_event_ordering.enum.dart';
 
-Future<void> showTicatFilterBottomSheet<T>({
+Future<void> showTicatsRadioBottomSheet<T>({
   required List<T> options,
   required T groupValue,
   required ValueChanged<T> onChanged,
@@ -20,7 +20,7 @@ Future<void> showTicatFilterBottomSheet<T>({
         isScrollControlled: false,
         isDismissible: true,
         builder: (context) {
-          return TicatsFilterBottomSheet(
+          return TicatsRadioBottomSheet(
             options: options,
             groupValue: groupValue,
             onChanged: onChanged,
@@ -29,12 +29,12 @@ Future<void> showTicatFilterBottomSheet<T>({
   }
 }
 
-class TicatsFilterBottomSheet<T> extends StatefulWidget {
+class TicatsRadioBottomSheet<T> extends StatefulWidget {
   final List<T> options;
   final T groupValue;
   final ValueChanged<T> onChanged;
 
-  const TicatsFilterBottomSheet({
+  const TicatsRadioBottomSheet({
     super.key,
     required this.options,
     required this.groupValue,
@@ -42,10 +42,10 @@ class TicatsFilterBottomSheet<T> extends StatefulWidget {
   });
 
   @override
-  State<TicatsFilterBottomSheet<T>> createState() => _TicatsFilterBottomSheetState<T>();
+  State<TicatsRadioBottomSheet<T>> createState() => _TicatsRadioBottomSheetState<T>();
 }
 
-class _TicatsFilterBottomSheetState<T> extends State<TicatsFilterBottomSheet<T>> {
+class _TicatsRadioBottomSheetState<T> extends State<TicatsRadioBottomSheet<T>> {
   late T groupValue;
 
   @override

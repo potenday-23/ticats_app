@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ticats_app/app/enum/ticats_event_category.enum.dart';
@@ -45,6 +46,16 @@ class EventListController extends _$EventListController {
 
   Future<void> selectOrdering(TicatsEventOrdering ordering) async {
     final newFilter = state.value!.filter.copyWith(ordering: ordering);
+
+    state = AsyncValue.data(state.value!.copyWith(events: await _fetchEvents(filter: newFilter), filter: newFilter));
+  }
+
+  Future<void> selectCategories(List<TicatsEventCategory> categories) async {
+    final newFilter = state.value!.filter.copyWith(
+        categories: categories.map((e) => e.name).toList());
+
+    print(categories.map((e) => e.name).toList());
+    print('카테고리즈');
 
     state = AsyncValue.data(state.value!.copyWith(events: await _fetchEvents(filter: newFilter), filter: newFilter));
   }

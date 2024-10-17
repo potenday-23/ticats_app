@@ -7,8 +7,8 @@ import 'package:ticats_app/presentation/common/widget/ticats_event_widget.dart';
 import 'package:ticats_app/presentation/event_list/provider/event_list_controller.dart';
 
 class EventListEventView extends BaseView {
-  const EventListEventView(this.categoryName, {super.key});
-  final String categoryName;
+  const EventListEventView({super.key, this.categoryName});
+  final String? categoryName;
 
   @override
   Widget buildView(BuildContext context, WidgetRef ref) {
