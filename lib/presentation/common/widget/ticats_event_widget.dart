@@ -33,9 +33,7 @@ class TicatsEventWidget extends ConsumerWidget {
         width: 132.w,
         imageHeight: 174.w,
         isBig: false,
-        status: event.isOpened ?? false
-            ? TicatsEventStatus.ticketOpen
-            : TicatsEventStatus.ticketReservation,
+        status: event.isOpened ?? false ? TicatsEventStatus.ticketOpen : TicatsEventStatus.ticketReservation,
         hasCategoryChip: true,
       );
 
@@ -47,9 +45,7 @@ class TicatsEventWidget extends ConsumerWidget {
         width: 167.w,
         imageHeight: 221.w,
         isBig: true,
-        status: event.isOpened ?? false
-            ? TicatsEventStatus.ticketOpen
-            : TicatsEventStatus.ticketReservation,
+        status: event.isOpened ?? false ? TicatsEventStatus.ticketOpen : TicatsEventStatus.ticketReservation,
       );
 
   final CulturalEventEntity event;
@@ -64,8 +60,7 @@ class TicatsEventWidget extends ConsumerWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        context.pushNamed('/eventDetail',
-            queryParameters: {'id': event.id.toString(), 'title': event.title});
+        context.pushNamed('/eventDetail', queryParameters: {'id': event.id.toString(), 'title': event.title});
       },
       child: SizedBox(
         width: width,
@@ -76,7 +71,7 @@ class TicatsEventWidget extends ConsumerWidget {
               children: [
                 ClipRRect(
                   borderRadius: AppRadius.xxsmall,
-                  child: CachedNetworkImage(imageUrl: event.thumbnailImageUrl, height: imageHeight),
+                  child: CachedNetworkImage(imageUrl: event.thumbnailImageUrl, height: imageHeight, fit: BoxFit.cover),
                 ),
                 if (hasCategoryChip) ...[
                   Positioned.fill(
@@ -101,7 +96,7 @@ class TicatsEventWidget extends ConsumerWidget {
               children: [
                 Expanded(
                   child: Text(
-                    event.title,
+                    event.title.trim(),
                     style: AppTypeface.label14Bold,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -115,31 +110,32 @@ class TicatsEventWidget extends ConsumerWidget {
             if (status == TicatsEventStatus.ticketReservation) ...[
               FittedBox(
                 child: isBig
-                    ? Row(
-                    children: [
-                      const TicatsEventStatusChip(),
-                      SizedBox(width: 4.w),
-                      Text(
-                        event.ticketOpenDate != null ? DateFormat("yyyy.MM.dd hh:mm").format(event.ticketOpenDate!) : "",
-                        style: AppTypeface.label12Bold.copyWith(color: AppColor.systemError),
-                      ),
-                    ]
-                )
+                    ? Row(children: [
+                        const TicatsEventStatusChip(),
+                        SizedBox(width: 4.w),
+                        Text(
+                          event.ticketOpenDate != null ? DateFormat("yyyy.MM.dd hh:mm").format(event.ticketOpenDate!) : "",
+                          style: AppTypeface.label12Bold.copyWith(color: AppColor.systemError),
+                        ),
+                      ])
                     : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TicatsEventStatusChip(),
-                    SizedBox(height: 4.h),
-                    Text(
-                      event.ticketOpenDate != null ? DateFormat("yyyy.MM.dd hh:mm").format(event.ticketOpenDate!) : "",
-                      style: AppTypeface.label12Bold.copyWith(color: AppColor.systemError),
-                    ),
-                  ],
-                ),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TicatsEventStatusChip(),
+                          SizedBox(height: 4.h),
+                          Text(
+                            event.ticketOpenDate != null ? DateFormat("yyyy.MM.dd hh:mm").format(event.ticketOpenDate!) : "",
+                            style: AppTypeface.label12Bold.copyWith(color: AppColor.systemError),
+                          ),
+                        ],
+                      ),
               ),
               SizedBox(height: 4.h),
             ],
-            Text(event.placeName ?? "", style: AppTypeface.label12Regular),
+            SizedBox(
+              width: width,
+              child: Text(event.placeName ?? "", style: AppTypeface.label12Regular, overflow: TextOverflow.ellipsis),
+            ),
             if (status == TicatsEventStatus.ticketOpen) ...[
               Text(
                 "${DateFormat("yyyy.MM.dd").format(event.startDate!)} ~ ${DateFormat("yyyy.MM.dd").format(event.endDate!)}",
