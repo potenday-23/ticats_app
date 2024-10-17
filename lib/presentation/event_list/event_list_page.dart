@@ -7,20 +7,22 @@ import 'package:ticats_app/presentation/event_list/view/event_list_event_view.da
 import 'package:ticats_app/presentation/event_list/view/event_list_filter_view.dart';
 
 class EventListPage extends BasePage {
-  const EventListPage({required this.title, super.key});
+  EventListPage({required this.title, super.key});
 
   final String title;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget buildPage(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
+      controller: _scrollController,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20.h),
           EventListFilterView(),
           SizedBox(height: 40.h),
-          EventListEventView(),
+          EventListEventView(scrollController: _scrollController,),
         ],
       ),
     );
