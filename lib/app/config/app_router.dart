@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ticats_app/presentation/event_detail/event_detail_page.dart';
 import 'package:ticats_app/presentation/event_list/event_list_of_category_page.dart';
 import 'package:ticats_app/presentation/login/login_page.dart';
+import 'package:ticats_app/presentation/event_list/event_list_page.dart';
 import 'package:ticats_app/presentation/main/main_page.dart';
 import 'package:ticats_app/presentation/register/register_account_page.dart';
 import 'package:ticats_app/presentation/register/register_permission_page.dart';
@@ -21,6 +22,7 @@ class Routes {
 
   // Event List
   static const String eventListOfCategory = '/eventList/category';
+  static const String eventList = '/eventList';
 
   // Event Detail
   static const String eventDetail = '/eventDetail';
@@ -59,6 +61,12 @@ class Router extends _$Router {
           path: Routes.eventListOfCategory,
           name: Routes.eventListOfCategory,
           builder: (context, state) => EventListOfCategoryPage(categoryName: state.uri.queryParameters['category'] as String),
+        ),
+
+        GoRoute(
+          path: Routes.eventList,
+          name: Routes.eventList,
+          builder: (context, state) => EventListPage(title: state.uri.queryParameters['title'] as String),
         ),
 
         // Event Detail
