@@ -14,6 +14,17 @@ class EventListOfCategoryPage extends BasePage {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void onInit(WidgetRef ref) {
+    super.onInit(ref);
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        ref.read(eventListControllerProvider(categoryName: categoryName).notifier).scrollData();
+      }
+    });
+  }
+
+  @override
   Widget buildPage(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       controller: _scrollController,
@@ -23,7 +34,7 @@ class EventListOfCategoryPage extends BasePage {
           SizedBox(height: 20.h),
           EventListFilterView(categoryName: categoryName),
           SizedBox(height: 40.h),
-          EventListEventView(categoryName: categoryName, scrollController: _scrollController),
+          EventListEventView(categoryName: categoryName),
         ],
       ),
     );
