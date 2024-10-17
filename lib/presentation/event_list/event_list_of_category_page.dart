@@ -1,33 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticats_app/app/base/base_page.dart';
 import 'package:ticats_app/presentation/common/app_bar/ticats_app_bar.dart';
+import 'package:ticats_app/presentation/event_list/hook/use_infinite_scroll_hook.dart';
 import 'package:ticats_app/presentation/event_list/provider/event_list_controller.dart';
 import 'package:ticats_app/presentation/event_list/view/event_list_event_view.dart';
 import 'package:ticats_app/presentation/event_list/view/event_list_filter_view.dart';
 
 class EventListOfCategoryPage extends BasePage {
-  EventListOfCategoryPage({required this.categoryName, super.key});
+  const EventListOfCategoryPage({required this.categoryName, super.key});
 
   final String categoryName;
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void onInit(WidgetRef ref) {
-    super.onInit(ref);
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        ref.read(eventListControllerProvider(categoryName: categoryName).notifier).scrollData();
-      }
-    });
-  }
 
   @override
   Widget buildPage(BuildContext context, WidgetRef ref) {
+    final scrollController = useScrollController();
+
+    useInfiniteScrollHook(
+      ref: ref,
+      scrollController: scrollController,
+      loadFunction: () => ref.read(eventListControllerProvider(categoryName: categoryName).notifier).scrollData(),
+    );
+
     return SingleChildScrollView(
-      controller: _scrollController,
+      controller: scrollController,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
