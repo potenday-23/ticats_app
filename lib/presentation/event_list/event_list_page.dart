@@ -6,10 +6,10 @@ import 'package:ticats_app/presentation/common/app_bar/ticats_app_bar.dart';
 import 'package:ticats_app/presentation/event_list/view/event_list_event_view.dart';
 import 'package:ticats_app/presentation/event_list/view/event_list_filter_view.dart';
 
-class EventListOfCategoryPage extends BasePage {
-  const EventListOfCategoryPage({required this.categoryName, super.key});
+class EventListPage extends BasePage {
+  const EventListPage({required this.title, super.key});
 
-  final String categoryName;
+  final String title;
 
   @override
   Widget buildPage(BuildContext context, WidgetRef ref) {
@@ -18,14 +18,14 @@ class EventListOfCategoryPage extends BasePage {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20.h),
-          EventListFilterView(categoryName: categoryName),
+          EventListFilterView(),
           SizedBox(height: 40.h),
-          EventListEventView(categoryName: categoryName),
+          EventListEventView(),
         ],
       ),
     );
   }
 
   @override
-  PreferredSizeWidget? buildAppBar(BuildContext context, WidgetRef ref) => TicatsAppBar.back(categoryName);
+  PreferredSizeWidget? buildAppBar(BuildContext context, WidgetRef ref) => TicatsAppBar.back(title);
 }

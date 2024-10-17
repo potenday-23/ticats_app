@@ -1,5 +1,5 @@
 enum TicatsEventOrdering {
-  ticketOpenData("오픈 다가온 순", "ticketOpenData"),
+  ticketOpenDate("오픈 다가온 순", "ticketOpenDate"),
   recommend("추천순", "recommend"),
   point("인기순", "-point"),
   updatedDate("최근순", "-updatedDate"),
