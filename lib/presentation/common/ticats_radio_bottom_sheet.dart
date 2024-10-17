@@ -73,18 +73,17 @@ class _TicatsRadioBottomSheetState<T> extends State<TicatsRadioBottomSheet<T>> {
                     SizedBox(
                       width: 320.w,
                       child: Theme(
-                        data: Theme.of(context).copyWith(
-                            radioTheme: RadioThemeData(
-                              fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-                                return AppGrayscale.gray50; // 선택되지 않은 상태의 색상
-                              }),
-                            )
-                        ),
+                        data: Theme.of(context).copyWith(radioTheme: RadioThemeData(
+                          fillColor: WidgetStateProperty.resolveWith<Color>((states) {
+                            return AppGrayscale.gray50; // 선택되지 않은 상태의 색상
+                          }),
+                        )),
                         child: RadioListTile<T>(
                           contentPadding: EdgeInsets.zero,
-                          visualDensity: VisualDensity(vertical: -4.h),
+                          visualDensity: const VisualDensity(vertical: -4),
                           activeColor: AppColor.primaryNormal,
-                          title: Text(_getEnumLabel(option), style: AppTypeface.body18Semibold.copyWith(color: isSelected ? AppColor.primaryDark : AppGrayscale.gray50)),
+                          title: Text(_getEnumLabel(option),
+                              style: AppTypeface.body18Semibold.copyWith(color: isSelected ? AppColor.primaryDark : AppGrayscale.gray50)),
                           value: option,
                           groupValue: groupValue,
                           onChanged: (value) {
