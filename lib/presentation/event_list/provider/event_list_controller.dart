@@ -54,9 +54,6 @@ class EventListController extends _$EventListController {
     final newFilter = state.value!.filter.copyWith(
         categories: categories.map((e) => e.name).toList());
 
-    print(categories.map((e) => e.name).toList());
-    print('카테고리즈');
-
     state = AsyncValue.data(state.value!.copyWith(events: await _fetchEvents(filter: newFilter), filter: newFilter));
   }
 
