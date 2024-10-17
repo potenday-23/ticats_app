@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ticats_app/app/enum/ticats_event_ordering.enum.dart';
 import 'package:ticats_app/presentation/common/ticats_filter_bottom_sheet.dart';
 import 'package:ticats_app/presentation/common/widget/ticats_chip.dart';
@@ -33,6 +34,7 @@ class EventListFilterView extends ConsumerWidget {
                 onChanged: (value) async {
                   await ref.read(eventListControllerProvider(categoryName: categoryName).notifier).selectOrdering(value);
                   ref.read(orderingProvider.notifier).state = value;
+                  context.pop();
                 },
               );
             },
