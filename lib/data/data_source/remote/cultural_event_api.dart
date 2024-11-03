@@ -3,6 +3,8 @@ import 'package:retrofit/retrofit.dart';
 import 'package:ticats_app/app/config/app_const.dart';
 import 'package:ticats_app/data/model/cultural_event/cultural_event_model.dart';
 import 'package:ticats_app/data/model/cultural_event/cultural_events_model.dart';
+import 'package:ticats_app/data/model/cultural_event/popular_search_keyword_model.dart';
+import 'package:ticats_app/data/model/cultural_event/recent_search_keyword_model.dart';
 import 'package:ticats_app/domain/entity/cultural_event/cultural_events_search_entity.dart';
 
 part 'cultural_event_api.g.dart';
@@ -18,4 +20,15 @@ abstract class CulturalEventAPI {
 
   @GET("/{id}")
   Future<CulturalEventModel> getCulturalEventInfo(@Path("id") String id);
+
+  @GET("/popular-keywords")
+  Future<PopularSearchKeywordModel> getPopularSearchKeywords();
+
+  @GET("/recent-keywords")
+  Future<RecentSearchKeywordModel> getRecentSearchKeywords();
+
+  @GET("/search")
+  Future<CulturalEventsModel> getSearchedCulturalEvents(
+    @Queries(encoded: true) CulturalEventsSearchEntity queries,
+  );
 }
