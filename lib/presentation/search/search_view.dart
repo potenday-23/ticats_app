@@ -42,6 +42,7 @@ class SearchView extends BasePage {
                 decoration: BoxDecoration(
                     color: AppGrayscale.gray95, borderRadius: AppRadius.small),
                 child: TextField(
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 16.w, vertical: 10.h),
