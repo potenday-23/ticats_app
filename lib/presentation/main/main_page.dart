@@ -3,12 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticats_app/app/base/base_page.dart';
 import 'package:ticats_app/presentation/home/home_view.dart';
 import 'package:ticats_app/presentation/main/provider/main_page_provider.dart';
+import 'package:ticats_app/presentation/search/search_view.dart';
 
 import 'widget/ticats_bottom_navigation_bar.dart';
 
 final List<Widget> _pages = [
   const HomeView(),
-  const HomeView(),
+  const SearchView(),
   const HomeView(),
   const HomeView(),
   const HomeView(),
