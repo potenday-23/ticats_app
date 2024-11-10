@@ -8,6 +8,8 @@ import 'package:ticats_app/app/config/app_typeface.dart';
 import 'package:ticats_app/presentation/common/widget/ticats_chip.dart';
 
 class SearchHistoryView extends BaseView {
+  const SearchHistoryView({super.key});
+
   @override
   Widget buildView(BuildContext context, WidgetRef ref) {
     return Column(
@@ -29,7 +31,15 @@ class SearchHistoryView extends BaseView {
           padding: EdgeInsets.only(left: 20.w),
           child: Row(
             children: [
-              TicatsChip.close('기록', onTap: () {})
+              TicatsChip.close(
+                '기록',
+                onTap: () {
+                  print('asdf');
+                },
+                iconTap: () {
+                  print('아이콘');
+                },
+              )
             ],
           ),
         )

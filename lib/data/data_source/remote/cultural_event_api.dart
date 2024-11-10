@@ -22,10 +22,10 @@ abstract class CulturalEventAPI {
   Future<CulturalEventModel> getCulturalEventInfo(@Path("id") String id);
 
   @GET("/popular-keywords")
-  Future<PopularSearchKeywordModel> getPopularSearchKeywords();
+  Future<List<PopularSearchKeywordModel>> getPopularSearchKeywords();
 
   @GET("/recent-keywords")
-  Future<RecentSearchKeywordModel> getRecentSearchKeywords();
+  Future<List<RecentSearchKeywordModel>> getRecentSearchKeywords();
 
   @GET("/search")
   Future<CulturalEventsModel> getSearchedCulturalEvents(

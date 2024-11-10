@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticats_app/app/base/base_view.dart';
 import 'package:ticats_app/app/config/app_color.dart';
 import 'package:ticats_app/app/config/app_typeface.dart';
+import 'package:ticats_app/domain/entity/cultural_event/popular_search_keyword_entity.dart';
+import 'package:ticats_app/presentation/common/widget/async_value_widget.dart';
+import 'package:ticats_app/presentation/search/provider/searched_event_list_controller.dart';
 
 class PopularSearchKeywordView extends BaseView {
   const PopularSearchKeywordView({super.key});
@@ -16,20 +19,31 @@ class PopularSearchKeywordView extends BaseView {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('추천 인기 검색어',
-              style: AppTypeface.label16Medium
-                  .copyWith(color: AppGrayscale.gray30)),
-          SizedBox(height: 16.h),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.h),
-            child: _keywordWidget(),
-          )
+              padding: EdgeInsets.symmetric(horizontal: 8.h),
+              child: AsyncValueWidget(
+                  value: ref.watch(searchedEventListControllerProvider),
+                  data: (state) {
+                    return Visibility(
+                      visible: state.popularSearchKeywords.isNotEmpty,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('추천 인기 검색어',
+                                style: AppTypeface.label16Medium
+                                    .copyWith(color: AppGrayscale.gray30)),
+                            SizedBox(height: 16.h),
+                            ...state.popularSearchKeywords
+                                .map((e) => _keywordWidget(e))
+                          ]),
+                    );
+                  }))
         ],
       ),
     );
   }
 
-  Widget _keywordWidget() {
+  Widget _keywordWidget(PopularSearchKeywordEntity keywordEntity) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(

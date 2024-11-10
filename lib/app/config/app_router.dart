@@ -41,7 +41,7 @@ class Router extends _$Router {
   @override
   GoRouter build() {
     return GoRouter(
-      initialLocation: Routes.login,
+      initialLocation: Routes.main,
       navigatorKey: rootNavigatorKey,
       routes: [
         // Auth
