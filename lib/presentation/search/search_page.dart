@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,11 +9,14 @@ import 'package:ticats_app/app/config/app_radius.dart';
 import 'package:ticats_app/app/config/app_typeface.dart';
 import 'package:ticats_app/gen/assets.gen.dart';
 import 'package:ticats_app/presentation/common/widget/async_value_widget.dart';
+import 'package:ticats_app/presentation/event_list/hook/use_infinite_scroll_hook.dart';
 import 'package:ticats_app/presentation/search/provider/searched_event_list_controller.dart';
 import 'package:ticats_app/presentation/search/view/keyword_list_view.dart';
 import 'package:ticats_app/presentation/search/view/popular_search_keyword_view.dart';
 import 'package:ticats_app/presentation/search/view/search_history_view.dart';
+import 'package:ticats_app/presentation/search/view/search_result_not_found_view.dart';
 import 'package:ticats_app/presentation/search/view/searched_event_list_event_view.dart';
+import 'package:ticats_app/presentation/search/view/searched_event_list_filter_view.dart';
 
 final searchTextControllerProvider =
     StateProvider<TextEditingController>((ref) {
@@ -28,7 +32,19 @@ class SearchPage extends BasePage {
 
   @override
   Widget buildPage(BuildContext context, WidgetRef ref) {
+    final scrollController = useScrollController();
+
+    useInfiniteScrollHook(
+        ref: ref,
+        scrollController: scrollController,
+        loadFunction: () {
+          return ref
+              .read(searchedEventListControllerProvider.notifier)
+              .scrollData();
+        });
+
     return SingleChildScrollView(
+      controller: scrollController,
       child: Column(
         children: [
           SizedBox(height: 4.h),
@@ -38,16 +54,28 @@ class SearchPage extends BasePage {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // 검색 버튼을 누르지 않음 and 키보드로 submit이 되지 않음,
                     if (state.isSubmitted == false) ...[
+                      // 텍스트를 입력 중이지 않을 때
                       if (ref.watch(searchTextControllerProvider).text ==
                           '') ...[
-                        SearchHistoryView(),
-                        PopularSearchKeywordView(),
+                        const SearchHistoryView(),
+                        const PopularSearchKeywordView(),
+                        // 텍스트를 입력 중일 때
                       ] else ...[
-                        KeywordListView()
+                        const KeywordListView()
                       ]
+                      // 검색 버튼을 눌렀거나 키보드로 submit이 되었고,
                     ] else ...[
-                      SearchedEventListEventView()
+                      // 검색 결과가 없을 때
+                      const SearchedEventListFilterView(),
+                      SizedBox(height: 28.h),
+                      if (state.searchedEvents.isEmpty) ...[
+                        const SearchResultNotFoundView()
+                        // 검색 결과가 있을 때
+                      ] else ...[
+                        const SearchedEventListEventView()
+                      ]
                     ]
                   ],
                 );
@@ -85,19 +113,28 @@ class SearchPage extends BasePage {
                     hintText: '티켓을 검색해보세요!',
                     hintStyle: AppTypeface.label16Regular
                         .copyWith(color: AppGrayscale.gray55),
-                    suffixIcon: Container(
-                        margin: EdgeInsets.only(right: 16.w),
-                        child: GestureDetector(
-                          onTap: () {
-                            ref.watch(searchTextControllerProvider).text = '';
-                            ref.read(searchedEventListControllerProvider.notifier).clickRemoveIcon();
-                          },
-                          child: SvgPicture.asset(
-                            Assets.icons.closeCircleFill.path,
-                            width: 20.w,
-                            height: 20.w,
-                          ),
-                        )),
+                    suffixIcon: Visibility(
+                      visible: ref
+                          .watch(searchTextControllerProvider)
+                          .text
+                          .isNotEmpty,
+                      child: Container(
+                          margin: EdgeInsets.only(right: 16.w),
+                          child: GestureDetector(
+                            onTap: () {
+                              ref.watch(searchTextControllerProvider).text = '';
+                              ref
+                                  .read(searchedEventListControllerProvider
+                                      .notifier)
+                                  .clickRemoveIcon();
+                            },
+                            child: SvgPicture.asset(
+                              Assets.icons.closeCircleFill.path,
+                              width: 20.w,
+                              height: 20.w,
+                            ),
+                          )),
+                    ),
                     suffixIconConstraints: BoxConstraints(
                       minWidth: 20.w,
                       minHeight: 20.w,
@@ -116,7 +153,11 @@ class SearchPage extends BasePage {
                 ),
               )),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ref
+                        .read(searchedEventListControllerProvider.notifier)
+                        .submit(ref.watch(searchTextControllerProvider).text);
+                  },
                   icon: Assets.icons.search.svg(
                     width: 24.w,
                     height: 24.w,

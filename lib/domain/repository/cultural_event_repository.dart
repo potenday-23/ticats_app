@@ -5,10 +5,15 @@ import 'package:ticats_app/domain/entity/cultural_event/recent_search_keyword_en
 
 abstract class CulturalEventRepository {
   Future<CulturalEventEntity> getCulturalEventInfo(String id);
-  Future<List<CulturalEventEntity>> getCulturalEvents(CulturalEventsSearchEntity request);
-  Future<List<CulturalEventEntity>> getRecommendEvents(CulturalEventsSearchEntity request);
-  Future<List<CulturalEventEntity>> getPointEvents(CulturalEventsSearchEntity request);
-  Future<List<CulturalEventEntity>> getOpenDateEvents(CulturalEventsSearchEntity request);
+  Future<List<CulturalEventEntity>> getCulturalEvents(
+      CulturalEventsSearchEntity request);
+  Future<List<CulturalEventEntity>> getRecommendEvents(
+      CulturalEventsSearchEntity request);
+  Future<List<CulturalEventEntity>> getPointEvents(
+      CulturalEventsSearchEntity request);
+  Future<List<CulturalEventEntity>> getOpenDateEvents(
+      CulturalEventsSearchEntity request);
   Future<List<RecentSearchKeywordEntity>> getRecentSearchKeywords();
   Future<List<PopularSearchKeywordEntity>> getPopularSearchKeywords();
+  Future<void> deleteRecentSearchKeyword(int id);
 }

@@ -19,13 +19,16 @@ class SearchedEventListEventView extends BaseView {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: GridView.builder(
-              gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 16.w, childAspectRatio: 167.w / 323.w),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16.w,
+                  childAspectRatio: 167.w / 323.w),
               physics: const NeverScrollableScrollPhysics(),
               itemCount: eventList.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return SizedBox(child: TicatsEventWidget.big(event: eventList[index]));
+                return SizedBox(
+                    child: TicatsEventWidget.big(event: eventList[index]));
               }),
         );
       },

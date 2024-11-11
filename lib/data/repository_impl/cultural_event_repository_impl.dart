@@ -26,21 +26,25 @@ class CulturalEventRepositoryImpl implements CulturalEventRepository {
   }
 
   @override
-  Future<List<CulturalEventEntity>> getCulturalEvents(CulturalEventsSearchEntity queries) async {
+  Future<List<CulturalEventEntity>> getCulturalEvents(
+      CulturalEventsSearchEntity queries) async {
     CulturalEventsModel response = await _api.getCulturalEvents(queries);
     return response.toEntityList();
   }
 
   @override
-  Future<List<CulturalEventEntity>> getOpenDateEvents(CulturalEventsSearchEntity queries) async {
-    queries = queries.copyWith(isOpened: false, ordering: TicatsEventOrdering.ticketOpenDate);
+  Future<List<CulturalEventEntity>> getOpenDateEvents(
+      CulturalEventsSearchEntity queries) async {
+    queries = queries.copyWith(
+        isOpened: false, ordering: TicatsEventOrdering.ticketOpenDate);
 
     CulturalEventsModel response = await _api.getCulturalEvents(queries);
     return response.toEntityList();
   }
 
   @override
-  Future<List<CulturalEventEntity>> getPointEvents(CulturalEventsSearchEntity queries) async {
+  Future<List<CulturalEventEntity>> getPointEvents(
+      CulturalEventsSearchEntity queries) async {
     queries = queries.copyWith(ordering: TicatsEventOrdering.point);
 
     CulturalEventsModel response = await _api.getCulturalEvents(queries);
@@ -48,26 +52,37 @@ class CulturalEventRepositoryImpl implements CulturalEventRepository {
   }
 
   @override
-  Future<List<CulturalEventEntity>> getRecommendEvents(CulturalEventsSearchEntity queries) async {
+  Future<List<CulturalEventEntity>> getRecommendEvents(
+      CulturalEventsSearchEntity queries) async {
     queries = queries.copyWith(ordering: TicatsEventOrdering.recommend);
 
     CulturalEventsModel response = await _api.getCulturalEvents(queries);
     return response.toEntityList();
   }
 
+  @override
   Future<List<PopularSearchKeywordEntity>> getPopularSearchKeywords() async {
-    List<PopularSearchKeywordModel> response = await _api.getPopularSearchKeywords();
+    List<PopularSearchKeywordModel> response =
+        await _api.getPopularSearchKeywords();
     return response.map((e) => e.toEntity()).toList();
   }
 
+  @override
   Future<List<RecentSearchKeywordEntity>> getRecentSearchKeywords() async {
-    List<RecentSearchKeywordModel> response = await _api.getRecentSearchKeywords();
+    List<RecentSearchKeywordModel> response =
+        await _api.getRecentSearchKeywords();
     return response.map((e) => e.toEntity()).toList();
+  }
+
+  @override
+  Future<void> deleteRecentSearchKeyword(int id) async {
+    await _api.deleteRecentSearchKeyword(id);
   }
 }
 
 @riverpod
-CulturalEventRepository culturalEventRepository(CulturalEventRepositoryRef ref) {
+CulturalEventRepository culturalEventRepository(
+    CulturalEventRepositoryRef ref) {
   final api = CulturalEventAPI(ref.read(dioProvider));
 
   return CulturalEventRepositoryImpl(api: api);

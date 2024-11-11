@@ -41,7 +41,7 @@ class Router extends _$Router {
   @override
   GoRouter build() {
     return GoRouter(
-      initialLocation: Routes.main,
+      initialLocation: Routes.login,
       navigatorKey: rootNavigatorKey,
       routes: [
         // Auth
@@ -60,13 +60,15 @@ class Router extends _$Router {
         GoRoute(
           path: Routes.eventListOfCategory,
           name: Routes.eventListOfCategory,
-          builder: (context, state) => EventListOfCategoryPage(categoryName: state.uri.queryParameters['category'] as String),
+          builder: (context, state) => EventListOfCategoryPage(
+              categoryName: state.uri.queryParameters['category'] as String),
         ),
 
         GoRoute(
           path: Routes.eventList,
           name: Routes.eventList,
-          builder: (context, state) => EventListPage(title: state.uri.queryParameters['title'] as String),
+          builder: (context, state) => EventListPage(
+              title: state.uri.queryParameters['title'] as String),
         ),
 
         // Event Detail
@@ -102,7 +104,8 @@ class Router extends _$Router {
             GoRoute(
               path: 'select-entertainment',
               name: Routes.registerSelectEntertianment,
-              builder: (context, state) => const RegisterSelectEntertainmentPage(),
+              builder: (context, state) =>
+                  const RegisterSelectEntertainmentPage(),
             ),
           ],
         ),

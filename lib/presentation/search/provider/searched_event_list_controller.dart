@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:ticats_app/app/enum/ticats_event_category.enum.dart';
+import 'package:ticats_app/app/enum/ticats_event_ordering.enum.dart';
 import 'package:ticats_app/domain/entity/cultural_event/cultural_event_entity.dart';
 import 'package:ticats_app/domain/entity/cultural_event/cultural_events_search_entity.dart';
 import 'package:ticats_app/domain/entity/cultural_event/popular_search_keyword_entity.dart';
@@ -29,45 +31,81 @@ class SearchedEventListController extends _$SearchedEventListController {
     _culturalEventUseCase = ref.read(culturalEventUsecasesProvider);
     return SearchedEventListState(
         searchedEvents: await fetchSearchedEvents(),
-            recentSearchKeywords: await fetchRecentSearchKeywords(),
-        popularSearchKeywords: await fetchPopularSearchKeywords()
-    );
+        recentSearchKeywords: await fetchRecentSearchKeywords(),
+        popularSearchKeywords: await fetchPopularSearchKeywords());
   }
 
   Future<List<CulturalEventEntity>> fetchSearchedEvents(
-      {String? keyword}) async {
+      {CulturalEventsSearchEntity? filter}) async {
     final List<CulturalEventEntity> response = await _culturalEventUseCase
         .getEvents
-        .execute(CulturalEventsSearchEntity(keyword: keyword));
+        .execute(filter ?? const CulturalEventsSearchEntity());
 
     return response;
   }
 
   Future<List<RecentSearchKeywordEntity>> fetchRecentSearchKeywords() async {
-    final List<RecentSearchKeywordEntity> response = await _culturalEventUseCase
-        .getRecentSearchKeywords
-        .execute();
+    final List<RecentSearchKeywordEntity> response =
+        await _culturalEventUseCase.getRecentSearchKeywords.execute();
 
     return response;
   }
 
   Future<List<PopularSearchKeywordEntity>> fetchPopularSearchKeywords() async {
-    final List<PopularSearchKeywordEntity> response = await _culturalEventUseCase
-        .getPopularSearchKeywords
-        .execute();
+    final List<PopularSearchKeywordEntity> response =
+        await _culturalEventUseCase.getPopularSearchKeywords.execute();
 
     return response;
   }
 
+  Future<void> deleteRecentSearchKeyword(int id) async {
+    final updatedList =
+        List<RecentSearchKeywordEntity>.from(state.value!.recentSearchKeywords)
+          ..removeWhere((e) => e.id == id);
+    state = AsyncData(state.value!.copyWith(recentSearchKeywords: updatedList));
+    await _culturalEventUseCase.deleteRecentSearchKeyword.execute(id);
+  }
+
+  Future<void> selectOrdering(TicatsEventOrdering ordering) async {
+    final newFilter = state.value!.filter.copyWith(ordering: ordering, page: 0);
+
+    state = AsyncValue.data(state.value!.copyWith(
+        searchedEvents: await fetchSearchedEvents(filter: newFilter),
+        filter: newFilter));
+  }
+
+  Future<void> selectCategories(List<TicatsEventCategory> categories) async {
+    final newFilter = state.value!.filter
+        .copyWith(categories: categories.map((e) => e.name).toList(), page: 0);
+
+    state = AsyncValue.data(state.value!.copyWith(
+        searchedEvents: await fetchSearchedEvents(filter: newFilter),
+        filter: newFilter));
+  }
+
+  Future<void> scrollData() async {
+    final newFilter =
+        state.value!.filter.copyWith(page: state.value!.filter.page + 1);
+    final newEvents = await fetchSearchedEvents(filter: newFilter);
+
+    state = AsyncValue.data(state.value!.copyWith(
+        searchedEvents: [...state.value!.searchedEvents, ...newEvents],
+        filter: newFilter));
+  }
+
   void onSearchTextChanged(String value) async {
+    final newFilter = state.value!.filter.copyWith(keyword: value, page: 0);
     state = AsyncData(state.value!.copyWith(
-        searchedEvents: await fetchSearchedEvents(keyword: value),
+        searchedEvents: await fetchSearchedEvents(filter: newFilter),
+        filter: newFilter,
         isSubmitted: false));
   }
 
   void submit(String value) async {
+    final newFilter = state.value!.filter.copyWith(keyword: value, page: 0);
     state = AsyncData(state.value!.copyWith(
-        searchedEvents: await fetchSearchedEvents(keyword: value),
+        searchedEvents: await fetchSearchedEvents(filter: newFilter),
+        filter: newFilter,
         isSubmitted: true));
   }
 

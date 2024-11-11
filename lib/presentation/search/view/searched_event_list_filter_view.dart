@@ -7,15 +7,15 @@ import 'package:ticats_app/app/enum/ticats_event_ordering.enum.dart';
 import 'package:ticats_app/presentation/common/ticats_checkbox_bottom_sheet.dart';
 import 'package:ticats_app/presentation/common/ticats_radio_bottom_sheet.dart';
 import 'package:ticats_app/presentation/common/widget/ticats_chip.dart';
-import 'package:ticats_app/presentation/event_list/provider/event_list_controller.dart';
+import 'package:ticats_app/presentation/search/provider/searched_event_list_controller.dart';
 
 final orderingProvider = StateProvider<TicatsEventOrdering>(
     (ref) => TicatsEventOrdering.ticketOpenDate);
 final categoryProvider = StateProvider<List<TicatsEventCategory>>(
     (ref) => [TicatsEventCategory.ALL]);
 
-class EventListFilterView extends ConsumerStatefulWidget {
-  const EventListFilterView({super.key, this.categoryName});
+class SearchedEventListFilterView extends ConsumerStatefulWidget {
+  const SearchedEventListFilterView({super.key, this.categoryName});
 
   final String? categoryName;
 
@@ -23,7 +23,8 @@ class EventListFilterView extends ConsumerStatefulWidget {
   _EventListFilterViewState createState() => _EventListFilterViewState();
 }
 
-class _EventListFilterViewState extends ConsumerState<EventListFilterView> {
+class _EventListFilterViewState
+    extends ConsumerState<SearchedEventListFilterView> {
   String categoryTitle = '카테고리';
 
   @override
@@ -55,9 +56,7 @@ class _EventListFilterViewState extends ConsumerState<EventListFilterView> {
                   selectedValues: categoryValue,
                   onChanged: (value) async {
                     await ref
-                        .read(eventListControllerProvider(
-                                categoryName: widget.categoryName)
-                            .notifier)
+                        .read(searchedEventListControllerProvider.notifier)
                         .selectCategories(value);
                     setState(() {
                       if (value.isEmpty) {
@@ -80,9 +79,7 @@ class _EventListFilterViewState extends ConsumerState<EventListFilterView> {
                 groupValue: orderingValue,
                 onChanged: (value) async {
                   await ref
-                      .read(eventListControllerProvider(
-                              categoryName: widget.categoryName)
-                          .notifier)
+                      .read(searchedEventListControllerProvider.notifier)
                       .selectOrdering(value);
                   ref.read(orderingProvider.notifier).state = value;
                   context.pop();

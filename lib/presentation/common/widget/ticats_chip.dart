@@ -27,7 +27,10 @@ class TicatsChip extends StatelessWidget {
   }
 
   factory TicatsChip.arrowDown(String text, {required onTap}) {
-    return TicatsChip(text, onTap: onTap, icon: Icons.keyboard_arrow_down_outlined, textStyle: AppTypeface.label14Bold);
+    return TicatsChip(text,
+        onTap: onTap,
+        icon: Icons.keyboard_arrow_down_outlined,
+        textStyle: AppTypeface.label14Bold);
   }
 
   @override
@@ -46,12 +49,15 @@ class TicatsChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(text, style: textStyle ?? AppTypeface.label14Medium.copyWith(color: AppGrayscale.gray20)),
+            Text(text,
+                style: textStyle ??
+                    AppTypeface.label14Medium
+                        .copyWith(color: AppGrayscale.gray20)),
             if (icon != null) ...[
               SizedBox(width: 6.w),
               GestureDetector(
                 onTap: () {
-                  iconTap!(); // 아이콘을 클릭하면 iconTap 호출
+                  if (iconTap != null) iconTap!(); // 아이콘을 클릭하면 iconTap 호출
                   return; // onTap 전파를 막기 위해 return 추가
                 },
                 child: Icon(icon, size: 20.w, color: AppGrayscale.gray20),

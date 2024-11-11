@@ -21,7 +21,8 @@ class EventListPage extends BasePage {
     useInfiniteScrollHook(
       ref: ref,
       scrollController: scrollController,
-      loadFunction: () => ref.read(eventListControllerProvider().notifier).scrollData(),
+      loadFunction: () =>
+          ref.read(eventListControllerProvider().notifier).scrollData(),
     );
 
     return SingleChildScrollView(
@@ -39,5 +40,6 @@ class EventListPage extends BasePage {
   }
 
   @override
-  PreferredSizeWidget? buildAppBar(BuildContext context, WidgetRef ref) => TicatsAppBar.back(title);
+  PreferredSizeWidget? buildAppBar(BuildContext context, WidgetRef ref) =>
+      TicatsAppBar.back(title);
 }
