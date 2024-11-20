@@ -8,7 +8,7 @@ part 'recent_search_keyword_entity.g.dart';
 class RecentSearchKeywordEntity with _$RecentSearchKeywordEntity {
   const factory RecentSearchKeywordEntity({
     required int id,
-    @Default("") String title,
+    @Default("") String keyword,
     @Default(0) int ordering,
   }) = _RecentSearchKeywordEntity;
 

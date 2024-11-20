@@ -59,11 +59,10 @@ class SearchedEventListController extends _$SearchedEventListController {
   }
 
   Future<void> deleteRecentSearchKeyword(int id) async {
-    final updatedList =
-        List<RecentSearchKeywordEntity>.from(state.value!.recentSearchKeywords)
-          ..removeWhere((e) => e.id == id);
-    state = AsyncData(state.value!.copyWith(recentSearchKeywords: updatedList));
     await _culturalEventUseCase.deleteRecentSearchKeyword.execute(id);
+    state = AsyncData(state.value!.copyWith(
+      recentSearchKeywords: await fetchRecentSearchKeywords(),
+    ));
   }
 
   Future<void> selectOrdering(TicatsEventOrdering ordering) async {
@@ -106,6 +105,7 @@ class SearchedEventListController extends _$SearchedEventListController {
     state = AsyncData(state.value!.copyWith(
         searchedEvents: await fetchSearchedEvents(filter: newFilter),
         filter: newFilter,
+        recentSearchKeywords: await fetchRecentSearchKeywords(),
         isSubmitted: true));
   }
 

@@ -59,9 +59,8 @@ class SearchPage extends BasePage {
                       // 텍스트를 입력 중이지 않을 때
                       if (ref.watch(searchTextControllerProvider).text ==
                           '') ...[
-                        const SearchHistoryView(),
-                        const PopularSearchKeywordView(),
-                        // 텍스트를 입력 중일 때
+                        SearchHistoryView(recentSearchKeywords: state.recentSearchKeywords),
+                        PopularSearchKeywordView(popularSearchKeywords: state.popularSearchKeywords),
                       ] else ...[
                         const KeywordListView()
                       ]

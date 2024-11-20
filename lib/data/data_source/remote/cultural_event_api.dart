@@ -27,8 +27,8 @@ abstract class CulturalEventAPI {
   @GET("/recent-keywords")
   Future<List<RecentSearchKeywordModel>> getRecentSearchKeywords();
 
-  @DELETE("/recent-keywords")
-  Future<void> deleteRecentSearchKeyword(int id);
+  @DELETE("/recent-keywords/{id}")
+  Future<void> deleteRecentSearchKeyword(@Path("id") int id);
 
   @GET("/search")
   Future<CulturalEventsModel> getSearchedCulturalEvents(

@@ -61,15 +61,15 @@ class SearchResultNotFoundView extends BaseView {
                           spacing: 12.w,
                           alignment: WrapAlignment.center,
                           children: state.popularSearchKeywords
-                              .map((e) => TicatsChip(e.title, onTap: () {
+                              .map((e) => TicatsChip(e.keyword, onTap: () {
                                     ref
                                         .watch(searchTextControllerProvider)
-                                        .text = e.title;
+                                        .text = e.keyword;
                                     ref
                                         .read(
                                             searchedEventListControllerProvider
                                                 .notifier)
-                                        .submit(e.title);
+                                        .submit(e.keyword);
                                   }))
                               .toList())),
                 ),

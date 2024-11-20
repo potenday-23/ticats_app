@@ -8,7 +8,7 @@ part 'popular_search_keyword_model.g.dart';
 @freezed
 class PopularSearchKeywordModel with _$PopularSearchKeywordModel {
   const factory PopularSearchKeywordModel({
-    @Default("") String title,
+    @Default("") String keyword,
     @Default(0) int ordering,
   }) = _PopularSearchKeywordModel;
 
@@ -18,6 +18,6 @@ class PopularSearchKeywordModel with _$PopularSearchKeywordModel {
 
 extension PopularSearchKeywordModelX on PopularSearchKeywordModel {
   PopularSearchKeywordEntity toEntity() {
-    return PopularSearchKeywordEntity(title: title, ordering: ordering);
+    return PopularSearchKeywordEntity(keyword: keyword, ordering: ordering);
   }
 }

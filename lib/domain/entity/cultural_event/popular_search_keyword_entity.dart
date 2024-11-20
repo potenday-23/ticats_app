@@ -6,7 +6,7 @@ part 'popular_search_keyword_entity.g.dart';
 @freezed
 class PopularSearchKeywordEntity with _$PopularSearchKeywordEntity {
   const factory PopularSearchKeywordEntity({
-    @Default("") String title,
+    @Default("") String keyword,
     @Default(0) int ordering,
   }) = _PopularSearchKeywordEntity;
 

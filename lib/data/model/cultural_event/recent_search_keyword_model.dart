@@ -9,7 +9,7 @@ part 'recent_search_keyword_model.g.dart';
 class RecentSearchKeywordModel with _$RecentSearchKeywordModel {
   const factory RecentSearchKeywordModel({
     required int id,
-    @Default("") String title,
+    @Default("") String keyword,
     @Default(0) int ordering,
   }) = _RecentSearchKeywordModel;
 
@@ -19,6 +19,6 @@ class RecentSearchKeywordModel with _$RecentSearchKeywordModel {
 
 extension RecentSearchKeywordModelX on RecentSearchKeywordModel {
   RecentSearchKeywordEntity toEntity() {
-    return RecentSearchKeywordEntity(id: id, title: title, ordering: ordering);
+    return RecentSearchKeywordEntity(id: id, keyword: keyword, ordering: ordering);
   }
 }

@@ -6,11 +6,10 @@ import 'package:ticats_app/app/base/base_view.dart';
 import 'package:ticats_app/app/config/app_color.dart';
 import 'package:ticats_app/app/config/app_typeface.dart';
 import 'package:ticats_app/domain/entity/cultural_event/popular_search_keyword_entity.dart';
-import 'package:ticats_app/presentation/common/widget/async_value_widget.dart';
-import 'package:ticats_app/presentation/search/provider/searched_event_list_controller.dart';
 
 class PopularSearchKeywordView extends BaseView {
-  const PopularSearchKeywordView({super.key});
+  final List<PopularSearchKeywordEntity> popularSearchKeywords;
+  const PopularSearchKeywordView({super.key, required this.popularSearchKeywords});
 
   @override
   Widget buildView(BuildContext context, WidgetRef ref) {
@@ -21,43 +20,37 @@ class PopularSearchKeywordView extends BaseView {
         children: [
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.h),
-              child: AsyncValueWidget(
-                  value: ref.watch(searchedEventListControllerProvider),
-                  data: (state) {
-                    return Visibility(
-                      visible: state.popularSearchKeywords.isNotEmpty,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('추천 인기 검색어',
-                                style: AppTypeface.label16Medium
-                                    .copyWith(color: AppGrayscale.gray30)),
-                            SizedBox(height: 16.h),
-                            ...state.popularSearchKeywords
-                                .map((e) => _keywordWidget(e))
-                          ]),
-                    );
-                  }))
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('추천 인기 검색어',
+                        style: AppTypeface.label16Medium
+                            .copyWith(color: AppGrayscale.gray30)),
+                    SizedBox(height: 16.h),
+                    ...popularSearchKeywords
+                        .map((e) => _keywordWidget(e))
+                  ])
+          )
         ],
       ),
     );
   }
 
-  Widget _keywordWidget(PopularSearchKeywordEntity keywordEntity) {
+  Widget _keywordWidget(PopularSearchKeywordEntity keyword) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            '1',
+            '${keyword.ordering}',
             style: AppTypeface.body20Bold.copyWith(color: AppColor.primaryDark),
           ),
           SizedBox(
             width: 12.w,
           ),
           Text(
-            '인피니트',
+            keyword.keyword,
             style:
                 AppTypeface.label16Regular.copyWith(color: AppGrayscale.gray10),
           )

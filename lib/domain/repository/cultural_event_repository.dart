@@ -14,6 +14,6 @@ abstract class CulturalEventRepository {
   Future<List<CulturalEventEntity>> getOpenDateEvents(
       CulturalEventsSearchEntity request);
   Future<List<RecentSearchKeywordEntity>> getRecentSearchKeywords();
-  Future<List<PopularSearchKeywordEntity>> getPopularSearchKeywords();
   Future<void> deleteRecentSearchKeyword(int id);
+  Future<List<PopularSearchKeywordEntity>> getPopularSearchKeywords();
 }
