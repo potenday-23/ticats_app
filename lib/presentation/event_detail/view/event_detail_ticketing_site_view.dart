@@ -60,16 +60,18 @@ class TicketingSiteLink extends StatelessWidget {
     );
   }
 
-  // TODO: enum으로 변환 필요. 정확히 어떤 데이터가 내려오는지 확인 후 변환 필요
   String _getImagePath(String platform) => switch (platform) {
     '인터파크' => Assets.images.interpark.path,
-    'Yes 24' => Assets.images.yes24.path,
+    '예스 24' => Assets.images.yes24.path,
+  // 멜론 추가 필요
+  /* 아직 미구현
     '네이버 예약' => Assets.images.naverReversation.path,
     '티켓링크' => Assets.images.ticketLink.path,
     '마이리얼트립' => Assets.images.myRealTrip.path,
     'CGV' => Assets.images.cgv.path,
     '메가박스' => Assets.images.megabox.path,
     '롯데 시네마' => Assets.images.lotteCinema.path,
+   */
     _ => ''
   };
 
