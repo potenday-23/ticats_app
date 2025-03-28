@@ -65,7 +65,7 @@ class HomeView extends BasePage {
             height: 24.w,
             colorFilter: const ColorFilter.mode(AppGrayscale.gray10, BlendMode.srcIn),
           ),
-          onPressed: () => ref.read(mainPageControllerProvider.notifier).setBottomNavigationBarIndex,
+          onPressed: () => ref.read(mainPageControllerProvider.notifier).setBottomNavigationBarIndex(1),
         ),
       ],
     );

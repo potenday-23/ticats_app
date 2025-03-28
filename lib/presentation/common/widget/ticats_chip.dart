@@ -11,6 +11,7 @@ class TicatsChip extends StatelessWidget {
     this.hasClose = true,
     this.icon,
     this.textStyle,
+    this.iconTap,
     super.key,
   });
 
@@ -19,13 +20,17 @@ class TicatsChip extends StatelessWidget {
   final IconData? icon;
   final TextStyle? textStyle;
   final bool hasClose;
+  final VoidCallback? iconTap;
 
-  factory TicatsChip.close(String text, {required onTap}) {
-    return TicatsChip(text, onTap: onTap, icon: Icons.close);
+  factory TicatsChip.close(String text, {required onTap, required iconTap}) {
+    return TicatsChip(text, onTap: onTap, icon: Icons.close, iconTap: iconTap);
   }
 
   factory TicatsChip.arrowDown(String text, {required onTap}) {
-    return TicatsChip(text, onTap: onTap, icon: Icons.keyboard_arrow_down_outlined, textStyle: AppTypeface.label14Bold);
+    return TicatsChip(text,
+        onTap: onTap,
+        icon: Icons.keyboard_arrow_down_outlined,
+        textStyle: AppTypeface.label14Bold);
   }
 
   @override
@@ -44,10 +49,19 @@ class TicatsChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(text, style: textStyle ?? AppTypeface.label14Medium.copyWith(color: AppGrayscale.gray20)),
+            Text(text,
+                style: textStyle ??
+                    AppTypeface.label14Medium
+                        .copyWith(color: AppGrayscale.gray20)),
             if (icon != null) ...[
               SizedBox(width: 6.w),
-              Icon(icon, size: 20.w, color: AppGrayscale.gray20),
+              GestureDetector(
+                onTap: () {
+                  if (iconTap != null) iconTap!(); // 아이콘을 클릭하면 iconTap 호출
+                  return; // onTap 전파를 막기 위해 return 추가
+                },
+                child: Icon(icon, size: 20.w, color: AppGrayscale.gray20),
+              ),
             ],
           ],
         ),

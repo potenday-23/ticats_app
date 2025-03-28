@@ -43,10 +43,12 @@ class TicatsCheckboxBottomSheet<T> extends StatefulWidget {
   });
 
   @override
-  State<TicatsCheckboxBottomSheet<T>> createState() => _TicatsCheckboxBottomSheetState<T>();
+  State<TicatsCheckboxBottomSheet<T>> createState() =>
+      _TicatsCheckboxBottomSheetState<T>();
 }
 
-class _TicatsCheckboxBottomSheetState<T> extends State<TicatsCheckboxBottomSheet<T>> {
+class _TicatsCheckboxBottomSheetState<T>
+    extends State<TicatsCheckboxBottomSheet<T>> {
   late List<T> selectedValues;
 
   @override
@@ -60,11 +62,13 @@ class _TicatsCheckboxBottomSheetState<T> extends State<TicatsCheckboxBottomSheet
     return Wrap(
       children: [
         Container(
-          padding: EdgeInsets.only(left: 35.w, top: 24.h, right: 35.w, bottom: 58.h),
+          padding:
+              EdgeInsets.only(left: 35.w, top: 24.h, right: 35.w, bottom: 58.h),
           width: double.infinity,
           child: Column(
             children: [
-              Text('정렬', style: AppTypeface.body20Bold, textAlign: TextAlign.center),
+              Text('정렬',
+                  style: AppTypeface.body20Bold, textAlign: TextAlign.center),
               SizedBox(height: 32.h),
               ...widget.options.map((option) {
                 bool isSelected = selectedValues.contains(option);
@@ -76,16 +80,19 @@ class _TicatsCheckboxBottomSheetState<T> extends State<TicatsCheckboxBottomSheet
                       child: Theme(
                         data: Theme.of(context).copyWith(
                             radioTheme: RadioThemeData(
-                              fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-                                return AppGrayscale.gray50;
-                              }),
-                            )
-                        ),
+                          fillColor:
+                              WidgetStateProperty.resolveWith<Color>((states) {
+                            return AppGrayscale.gray50;
+                          }),
+                        )),
                         child: CheckboxListTile(
                           contentPadding: EdgeInsets.zero,
-                          visualDensity: VisualDensity(vertical: -4.h),
                           activeColor: AppColor.primaryNormal,
-                          title: Text(_getEnumLabel(option), style: AppTypeface.body18Semibold.copyWith(color: isSelected ? AppColor.primaryDark : AppGrayscale.gray50)),
+                          title: Text(_getEnumLabel(option),
+                              style: AppTypeface.body18Semibold.copyWith(
+                                  color: isSelected
+                                      ? AppColor.primaryDark
+                                      : AppGrayscale.gray50)),
                           value: isSelected,
                           onChanged: (bool? checked) {
                             setState(() {
@@ -94,7 +101,8 @@ class _TicatsCheckboxBottomSheetState<T> extends State<TicatsCheckboxBottomSheet
                                   selectedValues.clear();
                                   selectedValues.add(option);
                                 } else {
-                                  selectedValues.remove(TicatsEventCategory.ALL);
+                                  selectedValues
+                                      .remove(TicatsEventCategory.ALL);
                                   selectedValues.add(option);
                                 }
                               } else {

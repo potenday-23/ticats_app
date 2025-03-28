@@ -26,6 +26,7 @@ class AppTypeface {
   static TextStyle get label14Bold => TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700, height: 1.57, color: AppColor.black);
   static TextStyle get label14Medium => TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500, height: 1.57, color: AppColor.black);
   static TextStyle get label14SemiBold => TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, height: 1.57, color: AppColor.black);
+  static TextStyle get label14Regular => TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400, height: 1.57, color: AppColor.black);
   static TextStyle get label12Bold => TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700, height: 1.5, color: AppColor.black);
   static TextStyle get label12SemiBold => TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600, height: 1.5, color: AppColor.black);
   static TextStyle get label12Medium => TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500, height: 1.5, color: AppColor.black);
